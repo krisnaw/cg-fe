@@ -4,6 +4,7 @@ import {ActionResponse} from "@/lib/types";
 import {briefInsertSchema, briefs} from "@/db/schema/brief.schema";
 import {z} from "zod";
 import {db} from "@/db/db-connection";
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 export type BriefData = z.infer<typeof briefInsertSchema>;
 export async function createBrief(formData: BriefData): Promise<ActionResponse> {
@@ -16,7 +17,7 @@ export async function createBrief(formData: BriefData): Promise<ActionResponse> 
       }
    }
 
-   validate.data.status = validate.data.writer ? "P" : "O"
+   validate.data.status = validate.data.writer ? BRIEF_STATUS.PROGRESS : BRIEF_STATUS.OPEN
 
    try {
       await db.insert(briefs).values(validate.data).returning()
