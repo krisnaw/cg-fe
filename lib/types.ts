@@ -1,3 +1,5 @@
+import {auth} from "@/lib/auth";
+
 export type ActionResponse = {
    success: boolean,
    message: string,
@@ -11,7 +13,7 @@ export const currencyOptions = [
    {value: 'IDR', label: 'Rp'},
    {value: 'AUD', label: 'AUD$'},
 ]
-
+export type OrganizationType = typeof auth.$Infer.Organization
 
 export type OrganizationMember = {
    id: string;
