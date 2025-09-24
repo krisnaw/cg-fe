@@ -1,0 +1,26 @@
+import {betterAuth} from "better-auth";
+import {drizzleAdapter} from "better-auth/adapters/drizzle";
+import {db} from "@/database/db-connection"; // your drizzle instance
+import {schema} from "@/database/schema";
+import {nextCookies} from "better-auth/next-js";
+
+
+export const auth = betterAuth({
+   trustedOrigins: [
+      "http://localhost:3000",
+      `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+   ],
+   plugins: [
+      nextCookies()
+   ],
+   emailAndPassword: {
+      enabled: true,
+   },
+   database: drizzleAdapter(db, {
+      provider: "pg",
+      schema: {
+         ...schema,
+         user: schema.user,
+      }
+   }),
+});

@@ -7,14 +7,21 @@
   },
   "dependencies": {
     "better-auth": "^1.3.16",
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "^0.44.5",
     "next": "15.2.0",
+    "nodemailer": "^7.0.6",
+    "pg": "^8.16.3",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.15.5",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.5",
     "typescript": "^5"
   },
   "packageManager": "pnpm@9.1.1+sha1.09ada6cd05003e0ced25fb716f9fda4063ec2e3b"
