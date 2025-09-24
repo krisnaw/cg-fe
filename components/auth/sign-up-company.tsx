@@ -11,6 +11,7 @@ import {Loader2} from "lucide-react";
 import {toast} from "sonner";
 import {signUpCompany} from "@/app/action/auth/sign-up-company.action";
 import {ActionResponse} from "@/lib/types";
+import {createOrganization} from "@/app/action/member/organization/organization.create.action";
 
 
 export default function SignUpCompany() {
@@ -39,14 +40,14 @@ export default function SignUpCompany() {
       }
 
       toast.success(res.message);
-      // const company_name = formData.get("company_name") as string;
-      // if (res.data) {
-      //    const org = await createOrganization(company_name, res.data)
-      //    if (org.success) {
-      //       toast.success(org.message)
-      //       router.push(`/dashboard/${org.data}`)
-      //    }
-      // }
+      const company_name = formData.get("company_name") as string;
+      if (res.data) {
+         const org = await createOrganization(company_name, res.data)
+         if (org.success) {
+            toast.success(org.message)
+            router.push(`/dashboard/${org.data}`)
+         }
+      }
       return res;
    }, {
       success: false,
