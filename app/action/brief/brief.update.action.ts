@@ -4,7 +4,7 @@ import {eq} from "drizzle-orm"
 import {z} from "zod"
 
 import {db} from "@/db/db-connection"
-import {briefs, briefUpdateSchema} from "@/db/schema/brief-schema"
+import {briefs, briefUpdateSchema} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 
 export type BriefUpdateData = z.infer<typeof briefUpdateSchema>

@@ -5,18 +5,18 @@ import {BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles} from "lu
 
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuGroup,
+   DropdownMenuItem,
+   DropdownMenuLabel,
+   DropdownMenuSeparator,
+   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar} from "@/components/ui/sidebar"
-
-import {useRouter} from "next/navigation"
 import Link from "next/link";
+import {signOutAction} from "@/app/action/auth/sign-out.action";
+import {toast} from "sonner";
 
 export type NavUserPayload = {
   id?: string | null
@@ -54,22 +54,11 @@ const getInitials = (value?: string | null) => {
 
 export function NavUser({user}: NavUserProps) {
   const {isMobile} = useSidebar()
-  const router = useRouter()
+  const [isPending, startTransition] = React.useTransition()
 
 
   const displayUser = user ?? null
   const avatarFallback = React.useMemo(() => getInitials(displayUser?.name), [displayUser?.name])
-  //
-  // const onClickLogout = async () => {
-  //   await signOut({
-  //     fetchOptions: {
-  //       onSuccess: () => {
-  //         router.push("/login")
-  //       },
-  //     },
-  //   })
-  //   router.push("/login")
-  // }
 
   return (
     <SidebarMenu>
@@ -135,11 +124,14 @@ export function NavUser({user}: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <button className="inline-flex w-full items-center space-x-2">
-                <LogOut className="mr-2" />
-                Log out
-              </button>
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault()
+                 signOutAction().then(r => toast.success("Logged out successfully"))
+              }}
+            >
+              <LogOut className="mr-2" />
+               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

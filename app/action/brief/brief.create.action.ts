@@ -1,7 +1,7 @@
 "use server"
 
 import {ActionResponse} from "@/lib/types";
-import {briefInsertSchema, briefs} from "@/db/schema/brief-schema";
+import {briefInsertSchema, briefs} from "@/db/schema/brief.schema";
 import {z} from "zod";
 import {db} from "@/db/db-connection";
 

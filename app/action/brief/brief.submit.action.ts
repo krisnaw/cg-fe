@@ -5,7 +5,7 @@ import {z} from "zod"
 import {revalidatePath} from "next/cache"
 
 import {db} from "@/db/db-connection"
-import {briefs} from "@/db/schema/brief-schema"
+import {briefs} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 
 const submitDraftSchema = z.object({

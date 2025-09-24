@@ -1,6 +1,6 @@
 import {db} from "@/db/db-connection";
 import {eq} from "drizzle-orm";
-import {briefs} from "@/db/schema/brief-schema";
+import {briefs} from "@/db/schema/brief.schema";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 
 export async function getBriefByOrgId(organizationId: string, search: string, sort: string = 'asc') {

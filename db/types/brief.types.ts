@@ -1,6 +1,6 @@
 import type {InferSelectModel} from "drizzle-orm";
 
-import {briefs} from "@/db/schema/brief-schema";
+import {briefs} from "@/db/schema/brief.schema";
 import {user} from "@/db/schema/auth-schema";
 
 export type BriefWithUsers = InferSelectModel<typeof briefs> & {

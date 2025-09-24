@@ -1,7 +1,7 @@
 "use server"
 
 import {db} from "@/db/db-connection";
-import {briefs} from "@/db/schema/brief-schema";
+import {briefs} from "@/db/schema/brief.schema";
 import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
 
