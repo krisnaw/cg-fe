@@ -1,7 +1,7 @@
 "use server"
 
 import {Resend} from "resend";
-import VercelInviteUser from "@/react-email-starter/emails/vercel-invite-user";
+import {EmailTemplate} from "@/components/email-template";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,7 +10,7 @@ export async function sendEmail(): Promise<void> {
       from: 'Acme <onboarding@resend.dev>',
       to: ['krisna.w2010@gmail.com'],
       subject: 'Hello world',
-      react: VercelInviteUser({ }),
+      react: EmailTemplate({ firstName: "Krisna" }),
    });
    console.log(data);
 }
