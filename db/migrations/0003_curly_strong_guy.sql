@@ -1,0 +1,1 @@
+ALTER TABLE "briefs" ADD CONSTRAINT "briefs_manager_writer_distinct" CHECK ("briefs"."manager" IS DISTINCT FROM "briefs"."writer");

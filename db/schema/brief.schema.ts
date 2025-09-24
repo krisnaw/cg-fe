@@ -1,5 +1,5 @@
-import {relations} from "drizzle-orm";
-import {integer, numeric, pgTable, text, timestamp, varchar} from "drizzle-orm/pg-core";
+import {relations, sql} from "drizzle-orm";
+import {check, integer, numeric, pgTable, text, timestamp, varchar} from "drizzle-orm/pg-core";
 import {createInsertSchema, createSelectSchema, createUpdateSchema} from "drizzle-zod";
 import {organization, user} from "@/db/schema/auth-schema";
 import {z} from "zod";
@@ -35,7 +35,12 @@ export const briefs = pgTable('briefs', {
        .defaultNow()
        .$onUpdate(() => /* @__PURE__ */ new Date())
        .notNull(),
-});
+}, (table) => ({
+   managerDiffersFromWriter: check(
+       "briefs_manager_writer_distinct",
+       sql`${table.manager} IS DISTINCT FROM ${table.writer}`,
+   ),
+}));
 
 export const briefSelectSchema = createSelectSchema(briefs);
 export const briefInsertSchema = createInsertSchema(briefs);
