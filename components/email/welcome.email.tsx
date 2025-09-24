@@ -14,7 +14,7 @@ import {
    Text,
 } from '@react-email/components';
 
-const EmailTemplate = ({ name = "there" } : {name: string}) => {
+const Welcome = ({ name = "there" } : {name: string}) => {
 
 
    return (
@@ -105,8 +105,8 @@ const EmailTemplate = ({ name = "there" } : {name: string}) => {
    );
 };
 
-EmailTemplate.PreviewProps = {
+Welcome.PreviewProps = {
    name: 'Sarah',
 };
 
-export default EmailTemplate;
+export default Welcome;

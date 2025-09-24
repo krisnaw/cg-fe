@@ -14,72 +14,80 @@ import {
    Text,
 } from '@react-email/components';
 
-const EmailTemplate = ({ name = "there" } : {name: string}) => {
-
+const ResetPasswordEmail = (props: { name?: "there" | undefined; resetUrl?: "https://example.com/reset-password" | undefined; }) => {
+   const { name = 'there', resetUrl = 'https://example.com/reset-password' } = props;
 
    return (
        <Html lang="en" dir="ltr">
           <Tailwind>
              <Head />
-             <Preview>Welcome to our platform! Let's get you started.</Preview>
+             <Preview>Reset your password - Action required</Preview>
              <Body className="bg-gray-100 font-sans py-[40px]">
                 <Container className="bg-white rounded-[8px] shadow-sm max-w-[600px] mx-auto p-[40px]">
                    {/* Header */}
                    <Section>
-                      <Heading className="text-[32px] font-bold text-gray-900 text-center mb-[32px] mt-0">
-                         Welcome aboard, {name}! 🎉
+                      <Heading className="text-[28px] font-bold text-gray-900 text-center mb-[32px] mt-0">
+                         Password Reset Request 🔐
                       </Heading>
                    </Section>
 
                    {/* Main Content */}
                    <Section>
                       <Text className="text-[18px] text-gray-700 leading-[28px] mb-[24px]">
-                         We're thrilled to have you join our community! Thank you for choosing us as your trusted partner.
+                         Hi {name},
                       </Text>
 
-                      <Text className="text-[16px] text-gray-600 leading-[24px] mb-[32px]">
-                         To get the most out of your experience, we recommend completing your account setup. It only takes a few minutes and will unlock all the amazing features we have to offer.
+                      <Text className="text-[16px] text-gray-600 leading-[24px] mb-[24px]">
+                         We received a request to reset the password for your account. If you made this request, click the button below to create a new password.
                       </Text>
 
                       {/* CTA Button */}
                       <Section className="text-center mb-[32px]">
                          <Button
-                             href="https://example.com/setup"
-                             className="bg-blue-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
+                             href={resetUrl}
+                             className="bg-red-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
                          >
-                            Complete Your Setup
+                            Reset Your Password
                          </Button>
                       </Section>
 
                       <Text className="text-[14px] text-gray-500 leading-[20px] mb-[24px] text-center">
-                         This will only take 2-3 minutes and helps us personalize your experience.
+                         This link will expire in 24 hours for security reasons.
                       </Text>
                    </Section>
 
-                   {/* Additional Info */}
+                   {/* Security Notice */}
                    <Section>
                       <Hr className="border-gray-200 my-[32px]" />
 
                       <Text className="text-[16px] text-gray-700 leading-[24px] mb-[16px]">
-                         <strong>What's next?</strong>
+                         <strong>Important Security Information:</strong>
                       </Text>
 
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[8px] ml-[16px]">
-                         • Complete your profile setup
+                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[16px]">
+                         • If you didn't request this password reset, please ignore this email - your password will remain unchanged
                       </Text>
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[8px] ml-[16px]">
-                         • Explore our key features
+                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[16px]">
+                         • Never share your password with anyone
                       </Text>
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px] ml-[16px]">
-                         • Connect with our community
+                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
+                         • Choose a strong password that includes letters, numbers, and special characters
                       </Text>
 
                       <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
-                         If you have any questions, feel free to reach out to our support team at{' '}
+                         If you're having trouble with the button above, copy and paste the following link into your browser:
+                      </Text>
+
+                      <Text className="text-[12px] text-gray-500 leading-[16px] mb-[24px] break-all bg-gray-50 p-[12px] rounded-[4px] border border-gray-200">
+                         {resetUrl}
+                      </Text>
+
+                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
+                         If you continue to have problems or didn't request this reset, please contact our support team at{' '}
                          <Link href="mailto:support@example.com" className="text-blue-600 no-underline">
                             support@example.com
                          </Link>
-                         . We're here to help!
+                         .
                       </Text>
                    </Section>
 
@@ -105,8 +113,9 @@ const EmailTemplate = ({ name = "there" } : {name: string}) => {
    );
 };
 
-EmailTemplate.PreviewProps = {
-   name: 'Sarah',
+ResetPasswordEmail.PreviewProps = {
+   name: 'John',
+   resetUrl: 'https://example.com/reset-password?token=abc123xyz789',
 };
 
-export default EmailTemplate;
+export default ResetPasswordEmail;
