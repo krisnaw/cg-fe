@@ -13,6 +13,7 @@ export const currencyOptions = [
    {value: 'IDR', label: 'Rp'},
    {value: 'AUD', label: 'AUD$'},
 ]
+export type SessionUserType = typeof auth.$Infer.Session.user
 export type OrganizationType = typeof auth.$Infer.Organization
 
 export type OrganizationMember = {
