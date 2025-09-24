@@ -1,3 +1,14 @@
-export default function AuthLayout({children}: { children: React.ReactNode }) {
-  return <div className="bg-white flex items-center justify-center min-h-screen ">{children}</div>
+import {auth} from "@/lib/auth";
+import {headers} from "next/headers";
+import {redirect} from "next/navigation";
+
+export default async function AuthLayout({children}: { children: React.ReactNode }) {
+   const session = await auth.api.getSession({
+      headers: await headers()
+   })
+
+   if (session) {
+      return redirect("/dashboard")
+   }
+   return <div className="bg-white flex items-center justify-center min-h-screen ">{children}</div>
 }
