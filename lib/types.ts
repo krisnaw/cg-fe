@@ -15,6 +15,10 @@ export const currencyOptions = [
 ]
 export type SessionUserType = typeof auth.$Infer.Session.user
 export type OrganizationType = typeof auth.$Infer.Organization
+export type SessionType = typeof auth.$Infer.Session.session
+export type MemberType = typeof auth.$Infer.Member
+export type InvitationType = typeof auth.$Infer.Invitation
+
 
 export type OrganizationMember = {
    id: string;
