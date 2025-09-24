@@ -12,7 +12,7 @@ export async function createBrief(formData: BriefData): Promise<ActionResponse> 
       return {
          success: false,
          message: "Invalid data",
-         error: z.treeifyError(validate.error)
+         error: z.treeifyError(validate.error),
       }
    }
 

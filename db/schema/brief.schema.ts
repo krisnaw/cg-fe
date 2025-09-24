@@ -43,7 +43,19 @@ export const briefs = pgTable('briefs', {
 }));
 
 export const briefSelectSchema = createSelectSchema(briefs);
-export const briefInsertSchema = createInsertSchema(briefs);
+
+export const briefInsertSchema = createInsertSchema(briefs).superRefine((values, ctx) => {
+   if (values.manager === values.writer) {
+      ctx.addIssue({
+         code: "custom",
+         message: "Manager and writer must be different",
+         path: ["writer"],
+      });
+   }
+});
+
+
+
 export const briefUpdateSchema = createUpdateSchema(briefs).extend({
    id: z.number(),
 });
