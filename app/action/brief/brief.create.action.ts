@@ -16,7 +16,7 @@ export async function createBrief(formData: BriefData): Promise<ActionResponse> 
       }
    }
 
-   validate.data.status = validate.data.writer ? "progress" : "open"
+   validate.data.status = validate.data.writer ? "P" : "O"
 
    try {
       await db.insert(briefs).values(validate.data).returning()
