@@ -54,9 +54,14 @@ const data = {
       },
       {
          title: "Organization",
-         url: "/dashboard/organization/settings",
+         url: "/dashboard/organization/member",
          icon: BookOpen,
          items: [
+            {
+               title: "Members",
+               url: "/dashboard/organization/member",
+            },
+
             {
                title: "Settings",
                url: "/dashboard/organization/settings",
