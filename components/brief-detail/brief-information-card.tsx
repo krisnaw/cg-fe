@@ -7,6 +7,7 @@ import {ButtonRequestRevision} from "@/components/brief/button-request-revision"
 import {ButtonResubmit} from "@/components/brief/button-resubmit"
 import {SubmitDraft} from "@/components/brief/submit-draft"
 import type {BriefWithUsers} from "@/db/types/brief.types"
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 export type BriefInformationCardProps = {
   brief: BriefWithUsers
@@ -103,17 +104,17 @@ export function BriefInformationCard({brief}: BriefInformationCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-         {brief.status === "progress" && (
+         {brief.status === BRIEF_STATUS.PROGRESS && (
              <>
                 <SubmitDraft briefId={brief.id} draftUrl={brief.draftURL} />
              </>
          )}
-         {brief.status === "request-revision" && (
+         {brief.status === BRIEF_STATUS.REQUEST_REVISION && (
              <>
                 <ButtonResubmit briefId={brief.id}  />
              </>
          )}
-         {brief.status === "submitted" || brief.status === "resubmitted" && (
+         {brief.status === BRIEF_STATUS.SUBMITTED || brief.status === BRIEF_STATUS.RESUBMITTED && (
              <>
                 <ButtonClose briefId={brief.id} />
                 <ButtonRequestRevision briefId={brief.id} />

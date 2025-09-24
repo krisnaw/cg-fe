@@ -1,10 +1,19 @@
-const BriefStatusText = {
+export const BRIEF_STATUS_TEXT = {
    O: "Open",
    P: "Progress",
    Q: "Request Revision",
    S: "Submitted",
    R: "Resubmitted",
    C: "Closed",
+};
+
+export const BRIEF_STATUS = {
+   "OPEN": "O",
+   "PROGRESS": "P",
+   "REQUEST_REVISION": "Q",
+   "SUBMITTED": "S",
+   "RESUBMITTED": "R",
+   "CLOSED": "C",
 };
 
 const BriefStatusLabel = {
@@ -16,7 +25,7 @@ const BriefStatusLabel = {
    C: "border-gray-200 bg-gray-50 text-gray-700",
 };
 
-const mapStatusText = new Map(Object.entries(BriefStatusText));
+const mapStatusText = new Map(Object.entries(BRIEF_STATUS_TEXT));
 const mapStatusLabel = new Map(Object.entries(BriefStatusLabel));
 
 export function getBriefStatusText(value: string): string {
