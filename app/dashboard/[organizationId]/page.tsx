@@ -1,3 +1,4 @@
+import ButtonSend from "@/app/dashboard/[organizationId]/button-send";
 
 export default async function Page() {
    return (
@@ -5,6 +6,7 @@ export default async function Page() {
          <div>
             Hey welcome to the Dashboard of your organization
          </div>
+         <ButtonSend />
       </div>
    );
 }
