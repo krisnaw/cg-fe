@@ -16,7 +16,8 @@ export default async function Page({searchParams, params}: BriefProps) {
 
    const search = (await searchParams).search as string ?? ""
    const sort = (await searchParams).sort as string ?? "asc"
-   const briefs = await getBriefByOrgId(organizationId, search, sort)
+   const status = (await searchParams).status as string | undefined
+   const briefs = await getBriefByOrgId(organizationId, search, sort, status)
 
    return (
        <Card>
