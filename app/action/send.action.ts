@@ -13,5 +13,4 @@ export async function sendEmail(): Promise<void> {
       react: VercelInviteUser({ }),
    });
    console.log(data);
-   console.log(error);
 }
