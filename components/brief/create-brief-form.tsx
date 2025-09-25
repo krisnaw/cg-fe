@@ -47,6 +47,7 @@ export function CreateBriefForm({organizationId, writers, managers}: CreateBrief
       const dueDateValue = (formData.get("dueDate") as string) ?? ""
       const price = formData.get("price") as string
       const currency = (formData.get("currency") as string) ?? "USD"
+      const wordCount = formData.get("wordCount") as string | null
       const submitData = {
          name,
          description,
@@ -56,6 +57,7 @@ export function CreateBriefForm({organizationId, writers, managers}: CreateBrief
          price,
          organizationId,
          dueDate: dueDateValue ? new Date(dueDateValue) : date ?? new Date(),
+         wordCount: wordCount ? parseInt(wordCount) : 0,
       }
 
       const res = await createBrief(submitData)

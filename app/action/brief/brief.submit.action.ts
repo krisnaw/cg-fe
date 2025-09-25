@@ -7,6 +7,7 @@ import {revalidatePath} from "next/cache"
 import {db} from "@/db/db-connection"
 import {briefs} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 const submitDraftSchema = z.object({
    briefId: z.coerce.number().int().positive(),
@@ -32,11 +33,11 @@ export async function briefSubmitAction(formData: FormData): Promise<ActionRespo
    try {
       const [updated] = await db
           .update(briefs)
-       .set({
-          draftURL: draftUrl,
-         status: "submitted",
-          updatedAt: new Date(),
-       })
+          .set({
+             draftURL: draftUrl,
+             status: BRIEF_STATUS.SUBMITTED,
+             updatedAt: new Date(),
+          })
           .where(eq(briefs.id, briefId))
           .returning()
 
