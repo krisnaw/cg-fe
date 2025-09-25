@@ -14,8 +14,7 @@ import {
    Text,
 } from '@react-email/components';
 
-const ResetPasswordEmail = (props: { name?: "there" | undefined; resetUrl?: "https://example.com/reset-password" | undefined; }) => {
-   const { name = 'there', resetUrl = 'https://example.com/reset-password' } = props;
+const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}) => {
 
    return (
        <Html lang="en" dir="ltr">
@@ -113,9 +112,5 @@ const ResetPasswordEmail = (props: { name?: "there" | undefined; resetUrl?: "htt
    );
 };
 
-ResetPasswordEmail.PreviewProps = {
-   name: 'John',
-   resetUrl: 'https://example.com/reset-password?token=abc123xyz789',
-};
 
 export default ResetPasswordEmail;

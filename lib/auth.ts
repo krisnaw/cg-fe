@@ -5,6 +5,7 @@ import * as schema from "@/db/schema/auth-schema";
 import {nextCookies} from "better-auth/next-js";
 import {organization} from "better-auth/plugins";
 import {ac, admin, manager, member, owner, writer} from "./permissions"
+import {sendResetPasswordEmail} from "@/app/action/email/send-reset-password.action";
 
 export const auth = betterAuth({
    trustedOrigins: [
@@ -59,6 +60,13 @@ export const auth = betterAuth({
    ],
    emailAndPassword: {
       enabled: true,
+      sendResetPassword: async ({user, url, token}, request) => {
+         await sendResetPasswordEmail({
+            to: user.email,
+            subject: "Reset your password",
+            url: url,
+         });
+      },
    },
    database: drizzleAdapter(db, {
       provider: "pg",
