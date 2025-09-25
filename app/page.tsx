@@ -63,7 +63,11 @@ export default function Home() {
           </Link>
         </nav>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" className="hidden text-slate-300 hover:text-white md:inline-flex" asChild>
+          <Button
+            variant="ghost"
+            className="hidden text-slate-300 transition hover:bg-white/5 hover:text-white md:inline-flex"
+            asChild
+          >
             <Link href="/login">Log in</Link>
           </Button>
           <Button className="group" asChild>
