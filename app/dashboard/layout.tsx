@@ -5,6 +5,7 @@ import React from "react";
 import {auth} from "@/lib/auth";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
+import NotificationBell from "@/components/notification/notification-bell";
 
 export default async function Layout({children}: Readonly<{ children: React.ReactNode; }>) {
    const session = await auth.api.getSession({
@@ -19,6 +20,9 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
       // This endpoint requires session cookies.
       headers: await headers(),
    });
+
+   const feed_id = process.env.KNOCK_FEED_ID
+   const knock_api_key = process.env.KNOCK_PUBLIC_API_KEY
 
    return (
        <SidebarProvider>
@@ -36,6 +40,7 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
                    </div>
                 </div>
                 <div className="pr-4">
+                   { feed_id && knock_api_key && <NotificationBell userId={session.user.id} feedId={feed_id} knockApiKey={knock_api_key} />}
                 </div>
              </header>
              <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
