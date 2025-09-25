@@ -25,7 +25,7 @@ export const briefs = pgTable('briefs', {
    draftURL: text('draft_url'),
 
    manager: text("manager")
-       .references(() => user.id, {onDelete: "set null"}),
+       .references(() => user.id, {onDelete: "set null"}).notNull(),
 
    writer: text("writer")
        .references(() => user.id, {onDelete: "set null"}),

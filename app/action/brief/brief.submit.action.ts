@@ -5,9 +5,13 @@ import {z} from "zod"
 import {revalidatePath} from "next/cache"
 
 import {db} from "@/db/db-connection"
-import {briefs} from "@/db/schema/brief.schema"
+import {briefs, briefSelectSchema} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
+import Knock from "@knocklabs/node";
+
+const knock = new Knock({apiKey: process.env.KNOCK_SECRET_API_KEY});
+const work_flow = "brief-was-created"
 
 const submitDraftSchema = z.object({
    briefId: z.coerce.number().int().positive(),
@@ -48,6 +52,8 @@ export async function briefSubmitAction(formData: FormData): Promise<ActionRespo
          }
       }
 
+      await sendBriefSubmittedNotification(updated)
+
       revalidatePath("/", "layout")
 
       return {
@@ -60,5 +66,25 @@ export async function briefSubmitAction(formData: FormData): Promise<ActionRespo
          success: false,
          message: "Failed to submit draft",
       }
+   }
+}
+
+async function sendBriefSubmittedNotification(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      const payload = {
+         title: brief.name,
+         subject: "Draft submitted and ready for review",
+         deadline: brief.dueDate?.toDateString?.() ?? "",
+         price: `${brief.currency} ${brief.price}`,
+         url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
+      }
+
+      await knock.workflows.trigger(work_flow, {
+         data: payload,
+         actor: brief.writer ?? undefined,
+         recipients: [brief.manager],
+      })
+   } catch (error) {
+      console.error("Failed to send Knock notification for brief submission", error)
    }
 }
