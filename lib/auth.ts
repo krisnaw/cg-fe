@@ -61,10 +61,11 @@ export const auth = betterAuth({
    emailAndPassword: {
       enabled: true,
       sendResetPassword: async ({user, url, token}, request) => {
+         const resetURL = `${process.env.RAILWAY_PUBLIC_DOMAIN}${url}`;
          await sendResetPasswordEmail({
             to: user.email,
             subject: "Reset your password",
-            url: url,
+            url: resetURL,
          });
       },
    },

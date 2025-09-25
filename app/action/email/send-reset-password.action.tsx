@@ -12,6 +12,7 @@ type Props = {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendResetPasswordEmail({ to, subject, url} : Props) {
+   console.log(to, subject, url)
    const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       to: ['krisna.w2010@gmail.com'],
