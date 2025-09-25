@@ -15,6 +15,9 @@ importers:
       '@knocklabs/client':
         specifier: ^0.18.4
         version: 0.18.4
+      '@knocklabs/node':
+        specifier: ^1.18.0
+        version: 1.18.0
       '@knocklabs/react':
         specifier: ^0.8.7
         version: 0.8.7(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -805,6 +808,9 @@ packages:
 
   '@knocklabs/client@0.18.4':
     resolution: {integrity: sha512-A5X17tF94kRQBB7YmVln8fDbfiGO4I+fU0hMoYBY5HpCGoWjZCKv75i3cs7Z7zVNYL5MuQGwDCs2cETplOF/wQ==}
+
+  '@knocklabs/node@1.18.0':
+    resolution: {integrity: sha512-ZWhaYqFiNgClkrY6aZMYU8fzunG1du11Cloj6Sg6I3GCEhwoJ26QZuznur7Liz+SHuwMhbXFsKZM+grDAbDmPA==}
 
   '@knocklabs/react-core@0.10.4':
     resolution: {integrity: sha512-2hBIZDW8m3zGuWxpy8SrEPval8zLIb3aVZBJX32uLWvfYAv1ZXHm3M4JtpJ+bH/zKEuFZEqE3axH5Mw/up0vfw==}
@@ -4160,6 +4166,10 @@ snapshots:
       urlpattern-polyfill: 10.1.0
     transitivePeerDependencies:
       - debug
+
+  '@knocklabs/node@1.18.0':
+    dependencies:
+      jose: 6.1.0
 
   '@knocklabs/react-core@0.10.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
     dependencies:

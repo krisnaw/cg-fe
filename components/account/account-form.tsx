@@ -15,6 +15,8 @@ export default function AccountForm({user}: { user: SessionUserType | undefined 
    const [image, setImage] = useState<string>(user?.image ?? "");
    const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_, formData: FormData) => {
       const data = {
+         id: formData.get("id") as string,
+         email: formData.get("email") as string,
          name: formData.get("name") as string,
          image: image
       }
@@ -37,6 +39,8 @@ export default function AccountForm({user}: { user: SessionUserType | undefined 
 
    return (
        <form action={formAction}>
+          <input type="hidden" name="id" value={user.id} />
+          <input type="hidden" name="email" value={user.email} />
           <Card className="min-w-sm max-w-sm">
              <CardHeader>
                 <CardTitle>Account</CardTitle>

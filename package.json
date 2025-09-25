@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@knocklabs/client": "^0.18.4",
+    "@knocklabs/node": "^1.18.0",
     "@knocklabs/react": "^0.8.7",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.3",
