@@ -5,14 +5,18 @@ import {z} from "zod"
 import {revalidatePath} from "next/cache"
 
 import {db} from "@/db/db-connection"
-import {briefs} from "@/db/schema/brief.schema"
+import {briefSelectSchema, briefs} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
+import Knock from "@knocklabs/node";
 
 const updateStatusSchema = z.object({
    briefId: z.number(),
    status: z.string()
 })
+
+const knock = new Knock({ apiKey: process.env.KNOCK_SECRET_API_KEY });
+const BRIEF_WORKFLOW = "brief-was-created"
 
 export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema>): Promise<ActionResponse> {
    const parsed = updateStatusSchema.safeParse(input)
@@ -44,6 +48,10 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
          }
       }
 
+      if (status === BRIEF_STATUS.REQUEST_REVISION) {
+         await sendRequestRevisionNotification(updated)
+      }
+
       revalidatePath("/", "layout")
 
       return {
@@ -56,6 +64,30 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
          success: false,
          message: "Failed to update status",
       }
+   }
+}
+
+async function sendRequestRevisionNotification(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      if (!brief.writer) {
+         return
+      }
+
+      const payload = {
+         title: brief.name,
+         subject: "Revision requested on your draft",
+         deadline: brief.dueDate?.toDateString?.() ?? "",
+         price: `${brief.currency} ${brief.price}`,
+         url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
+      }
+
+      await knock.workflows.trigger(BRIEF_WORKFLOW, {
+         data: payload,
+         actor: brief.manager ?? undefined,
+         recipients: [brief.writer],
+      })
+   } catch (error) {
+      console.error("Failed to send Knock notification for revision request", error)
    }
 }
 

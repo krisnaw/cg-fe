@@ -11,7 +11,7 @@ import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
 
 const knock = new Knock({apiKey: process.env.KNOCK_SECRET_API_KEY});
-const work_flow = "brief-was-created"
+const BRIEF_WORKFLOW = "brief-was-created"
 
 const submitDraftSchema = z.object({
    briefId: z.coerce.number().int().positive(),
@@ -79,7 +79,7 @@ async function sendBriefSubmittedNotification(brief: z.infer<typeof briefSelectS
          url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
       }
 
-      await knock.workflows.trigger(work_flow, {
+      await knock.workflows.trigger(BRIEF_WORKFLOW, {
          data: payload,
          actor: brief.writer ?? undefined,
          recipients: [brief.manager],
