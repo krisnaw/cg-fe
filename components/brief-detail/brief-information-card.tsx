@@ -103,7 +103,7 @@ export function BriefInformationCard({brief}: BriefInformationCardProps) {
           <dd className="text-sm/6 text-gray-500">{brief.wordCount}</dd>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="gap-2">
          {brief.status === BRIEF_STATUS.PROGRESS && (
              <>
                 <SubmitDraft briefId={brief.id} draftUrl={brief.draftURL} />
@@ -114,7 +114,7 @@ export function BriefInformationCard({brief}: BriefInformationCardProps) {
                 <ButtonResubmit briefId={brief.id}  />
              </>
          )}
-         {brief.status === BRIEF_STATUS.SUBMITTED || brief.status === BRIEF_STATUS.RESUBMITTED && (
+         {(brief.status == BRIEF_STATUS.SUBMITTED || brief.status === BRIEF_STATUS.RESUBMITTED) && (
              <>
                 <ButtonClose briefId={brief.id} />
                 <ButtonRequestRevision briefId={brief.id} />

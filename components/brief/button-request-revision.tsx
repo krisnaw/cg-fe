@@ -6,6 +6,7 @@ import {toast} from "sonner"
 
 import {Button} from "@/components/ui/button"
 import {updateBriefStatus} from "@/app/action/brief/brief.status.action"
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 type ButtonRequestRevisionProps = {
    briefId: number
@@ -17,7 +18,7 @@ export function ButtonRequestRevision({briefId}: ButtonRequestRevisionProps) {
 
    const handleClick = () => {
       startTransition(async () => {
-         const result = await updateBriefStatus({briefId, status: "request-revision"})
+         const result = await updateBriefStatus({briefId, status: BRIEF_STATUS.REQUEST_REVISION})
 
          if (!result.success) {
             toast.error(result.message)

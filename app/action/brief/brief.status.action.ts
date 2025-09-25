@@ -7,10 +7,11 @@ import {revalidatePath} from "next/cache"
 import {db} from "@/db/db-connection"
 import {briefs} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 const updateStatusSchema = z.object({
    briefId: z.number(),
-   status: z.enum(["draft", "submitted", "request-revision", "completed", "closed", "close", "resubmitted"]),
+   status: z.string()
 })
 
 export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema>): Promise<ActionResponse> {
@@ -79,7 +80,7 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
         const [updated] = await db
             .update(briefs)
             .set({
-                status: "close",
+                status: BRIEF_STATUS.CLOSED,
                 closedAt: new Date(),
                 updatedAt: new Date(),
             })

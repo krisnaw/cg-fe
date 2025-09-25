@@ -6,6 +6,7 @@ import {toast} from "sonner"
 
 import {Button} from "@/components/ui/button"
 import {updateBriefStatus} from "@/app/action/brief/brief.status.action"
+import {BRIEF_STATUS} from "@/lib/brief-status";
 
 type ButtonResubmitProps = {
    briefId: number
@@ -17,7 +18,7 @@ export function ButtonResubmit({briefId}: ButtonResubmitProps) {
 
    const handleClick = () => {
       startTransition(async () => {
-         const result = await updateBriefStatus({briefId, status: "resubmitted"})
+         const result = await updateBriefStatus({briefId, status: BRIEF_STATUS.RESUBMITTED})
 
          if (!result.success) {
             toast.error(result.message)
