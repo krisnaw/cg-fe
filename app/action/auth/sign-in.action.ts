@@ -12,7 +12,6 @@ type SignInData = z.infer<typeof SignInSchema>;
 export async function signInAction(signData: SignInData) {
    const validate = SignInSchema.safeParse(signData);
    if (!validate.success) {
-      console.log(validate.error)
       return {
          success: false,
          message: "Invalid data",
@@ -29,7 +28,9 @@ export async function signInAction(signData: SignInData) {
       })
       console.log(data)
    } catch (error) {
-      console.log(error)
+      if (error instanceof Error) {
+         console.log(error.message)
+      }
       return  {
          success: false,
          message: "Sorry, something went wrong. Please try again later."
