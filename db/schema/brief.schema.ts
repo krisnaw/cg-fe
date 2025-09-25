@@ -54,8 +54,6 @@ export const briefInsertSchema = createInsertSchema(briefs).superRefine((values,
    }
 });
 
-
-
 export const briefUpdateSchema = createUpdateSchema(briefs).extend({
    id: z.number(),
 });
