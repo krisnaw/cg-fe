@@ -52,6 +52,10 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
          await sendRequestRevisionNotification(updated)
       }
 
+      if (status === BRIEF_STATUS.RESUBMITTED) {
+         await sendResubmittedNotification(updated)
+      }
+
       revalidatePath("/", "layout")
 
       return {
@@ -88,6 +92,30 @@ async function sendRequestRevisionNotification(brief: z.infer<typeof briefSelect
       })
    } catch (error) {
       console.error("Failed to send Knock notification for revision request", error)
+   }
+}
+
+async function sendResubmittedNotification(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      if (!brief.manager) {
+         return
+      }
+
+      const payload = {
+         title: brief.name,
+         subject: "Updated draft resubmitted for review",
+         deadline: brief.dueDate?.toDateString?.() ?? "",
+         price: `${brief.currency} ${brief.price}`,
+         url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
+      }
+
+      await knock.workflows.trigger(BRIEF_WORKFLOW, {
+         data: payload,
+         actor: brief.writer ?? undefined,
+         recipients: [brief.manager],
+      })
+   } catch (error) {
+      console.error("Failed to send Knock notification for resubmitted draft", error)
    }
 }
 
