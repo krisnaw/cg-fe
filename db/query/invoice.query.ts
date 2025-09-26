@@ -34,6 +34,19 @@ export async function getInvoiceByOrgId(organizationId: string, status?: string)
    })
 }
 
+export async function getInvoiceByOrgAndId(organizationId: string, invoiceId: number) {
+   return db.query.invoice.findFirst({
+      where: and(
+          eq(invoice.organizationId, organizationId),
+          eq(invoice.id, invoiceId),
+      ),
+      with: {
+         organization: true,
+         writerUser: true,
+      },
+   })
+}
+
 export async function getInvoiceById(id: number) {
    return db.query.invoice.findFirst({
       where: eq(invoice.id, id),

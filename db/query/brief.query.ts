@@ -48,3 +48,16 @@ export async function getBriefById(id: number) {
 
    return brief as unknown as BriefWithUsers
 }
+
+export async function getBriefsByInvoiceId(invoiceId: number) {
+   const results = await db.query.briefs.findMany({
+      where: eq(briefs.invoiceId, invoiceId),
+      with: {
+         managerUser: true,
+         writerUser: true,
+         organization: true,
+      }
+   });
+
+   return results as unknown as BriefWithUsers[]
+}

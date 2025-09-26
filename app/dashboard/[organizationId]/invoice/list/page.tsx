@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
@@ -38,6 +40,7 @@ export default async function InvoiceListPage({params}: Props) {
                   <TableHead>Writer</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>Updated</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -52,6 +55,11 @@ export default async function InvoiceListPage({params}: Props) {
                       <TableCell>{item.writerUser?.name ?? item.writer}</TableCell>
                       <TableCell>{item.createdAt?.toLocaleString?.() ?? String(item.createdAt)}</TableCell>
                       <TableCell>{item.updatedAt?.toLocaleString?.() ?? String(item.updatedAt)}</TableCell>
+                      <TableCell>
+                        <Link href={`/dashboard/${organizationId}/invoice/${item.id}`} className="text-sm font-medium text-primary underline-offset-4 hover:underline">
+                           View
+                        </Link>
+                      </TableCell>
                     </TableRow>
                 ))}
               </TableBody>

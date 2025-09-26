@@ -31,6 +31,17 @@ export default async function Page({params,}: { params: Promise<{ organizationId
                        placeholder="15"
                    />
                 </div>
+                <div className="space-y-2">
+                   <Label htmlFor="serviceFee">Freelance fee (%)</Label>
+                   <Input
+                       id="freelanerFee"
+                       name="freelanerFee"
+                       type="number"
+                       step="0.01"
+                       min={0}
+                       placeholder="15"
+                   />
+                </div>
              </CardContent>
              <CardFooter>
                 <Button type="button" disabled>
