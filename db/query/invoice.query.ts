@@ -11,6 +11,10 @@ export async function getDraftInvoiceByOrgIdAndWriterId(OrganizationId: string, 
           eq(invoice.writer, writerId),
           eq(invoice.status, "draft")
       ),
+      with: {
+         organization: true,
+         writerUser: true,
+      },
    })
 }
 
@@ -23,5 +27,19 @@ export async function getInvoiceByOrgId(organizationId: string, status?: string)
    
    return db.query.invoice.findMany({
       where: and(...whereConditions),
+      with: {
+         organization: true,
+         writerUser: true,
+      },
+   })
+}
+
+export async function getInvoiceById(id: number) {
+   return db.query.invoice.findFirst({
+      where: eq(invoice.id, id),
+      with: {
+         organization: true,
+         writerUser: true,
+      },
    })
 }

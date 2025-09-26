@@ -46,17 +46,17 @@ const data = {
       },
       {
          title: "Invoice",
-         url: "/dashboard/organization/invoice/list",
+         url: "/dashboard/invoice/list",
          icon: BookOpen,
          items: [
             {
                title: "List",
-               url: "/dashboard/organization/invoice/list",
+               url: "/dashboard/invoice/list",
             },
 
             {
                title: "Settings",
-               url: "/dashboard/organization/invoice/settings",
+               url: "/dashboard/invoice/setting",
             },
          ],
       },

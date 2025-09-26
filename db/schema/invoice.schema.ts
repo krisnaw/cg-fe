@@ -1,3 +1,4 @@
+import {relations} from "drizzle-orm";
 import {integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {organization, user} from "@/db/schema/auth-schema";
 import {createInsertSchema, createSelectSchema, createUpdateSchema} from "drizzle-zod";
@@ -21,6 +22,17 @@ export const invoice = pgTable('invoice', {
        .$onUpdate(() => /* @__PURE__ */ new Date())
        .notNull(),
 });
+
+export const invoiceRelations = relations(invoice, ({one}) => ({
+   organization: one(organization, {
+      fields: [invoice.organizationId],
+      references: [organization.id],
+   }),
+   writerUser: one(user, {
+      fields: [invoice.writer],
+      references: [user.id],
+   }),
+}));
 
 export const invoiceSelectSchema = createSelectSchema(invoice);
 
