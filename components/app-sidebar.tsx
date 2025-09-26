@@ -42,13 +42,21 @@ const data = {
                title: "List",
                url: "/dashboard/pitch-request",
             },
+         ],
+      },
+      {
+         title: "Invoice",
+         url: "/dashboard/organization/invoice/list",
+         icon: BookOpen,
+         items: [
             {
-               title: "Explorer",
-               url: "#",
+               title: "List",
+               url: "/dashboard/organization/invoice/list",
             },
+
             {
-               title: "Quantum",
-               url: "#",
+               title: "Settings",
+               url: "/dashboard/organization/invoice/settings",
             },
          ],
       },
@@ -111,8 +119,8 @@ const data = {
          icon: Frame,
       },
       {
-         name: "Sales & Marketing",
-         url: "#",
+         name: "Payment",
+         url: "/dashboard/freelancer/payment",
          icon: PieChart,
       },
       {
