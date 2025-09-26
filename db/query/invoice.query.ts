@@ -13,3 +13,15 @@ export async function getDraftInvoiceByOrgIdAndWriterId(OrganizationId: string, 
       ),
    })
 }
+
+export async function getInvoiceByOrgId(organizationId: string, status?: string) {
+   const whereConditions = [eq(invoice.organizationId, organizationId)];
+   
+   if (status) {
+      whereConditions.push(eq(invoice.status, status));
+   }
+   
+   return db.query.invoice.findMany({
+      where: and(...whereConditions),
+   })
+}

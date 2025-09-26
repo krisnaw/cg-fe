@@ -2,7 +2,14 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/comp
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 
-export default function InvoiceAddressPage() {
+type Props = {
+   params: Promise<{ organizationId: string }>
+}
+
+export default async function InvoiceAddressPage({params}: Props) {
+
+   const {organizationId} = await params
+
   return (
     <Card>
       <CardHeader>
