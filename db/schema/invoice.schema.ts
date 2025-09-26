@@ -13,9 +13,7 @@ export const invoice = pgTable('invoice', {
    writer: text("writer")
        .references(() => user.id, {onDelete: "set null"}).notNull(),
 
-
    status: text("status").notNull().default('draft'),
-
 
    createdAt: timestamp("created_at").defaultNow().notNull(),
    updatedAt: timestamp("updated_at")

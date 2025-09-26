@@ -3,6 +3,7 @@ import {check, integer, numeric, pgTable, text, timestamp, varchar} from "drizzl
 import {createInsertSchema, createSelectSchema, createUpdateSchema} from "drizzle-zod";
 import {organization, user} from "@/db/schema/auth-schema";
 import {z} from "zod";
+import {invoice} from "@/db/schema/invoice.schema";
 
 export const briefs = pgTable('briefs', {
    id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -29,6 +30,9 @@ export const briefs = pgTable('briefs', {
 
    writer: text("writer")
        .references(() => user.id, {onDelete: "set null"}),
+
+   invoiceId: integer("invoice_id")
+       .references(() => invoice.id, {onDelete: "set null"}),
 
    createdAt: timestamp("created_at").defaultNow().notNull(),
    updatedAt: timestamp("updated_at")

@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation"
 import {toast} from "sonner"
 
 import {Button} from "@/components/ui/button"
-import {closeBrief} from "@/app/action/brief/brief.status.action"
+import {closeBrief} from "@/app/action/brief/brief.closed.action";
 
 type ButtonCloseProps = {
    briefId: number

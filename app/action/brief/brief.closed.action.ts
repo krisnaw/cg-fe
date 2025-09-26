@@ -3,10 +3,11 @@
 import {z} from "zod";
 import {ActionResponse} from "@/lib/types";
 import {db} from "@/db/db-connection";
-import {briefs} from "@/db/schema/brief.schema";
+import {briefs, briefSelectSchema} from "@/db/schema/brief.schema";
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
+import {invoice} from "@/db/schema/invoice.schema";
 
 const closeBriefSchema = z.object({
    briefId: z.number(),
@@ -45,6 +46,7 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
       revalidatePath("/", "layout")
 
       // TODO: CREATE/UPDATE invoice
+      await updateOrCreateInvoice(updated)
       // TODO: Send knock notification
       // TODO: Send email notification
 
@@ -58,5 +60,22 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
          success: false,
          message: "Failed to close brief",
       }
+   }
+}
+
+async function updateOrCreateInvoice(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      await db.transaction(async (trx) => {
+         // Create invoice
+         const [inserted] = await db.insert(invoice).values({organizationId: brief.organizationId, writer: brief.writer!}).returning();
+
+         // update briefs
+         await db.transaction(async (trx) => {
+            await db.update(briefs).set({invoiceId: inserted.id,}).where(eq(briefs.id, brief.id)).returning()
+         })
+
+      })
+   } catch (error) {
+      console.error("Failed to create invoice", error)
    }
 }
