@@ -8,6 +8,7 @@ import {BRIEF_STATUS} from "@/lib/brief-status";
 import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
 import {invoice} from "@/db/schema/invoice.schema";
+import {getDraftInvoiceByOrgIdAndWriterId} from "@/db/query/invoice.query";
 
 const closeBriefSchema = z.object({
    briefId: z.number(),
@@ -64,18 +65,21 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
 }
 
 async function updateOrCreateInvoice(brief: z.infer<typeof briefSelectSchema>) {
-   try {
+   const getDraftInvoice = await getDraftInvoiceByOrgIdAndWriterId(brief.organizationId, brief.writer!)
+   if (getDraftInvoice) {
+      await db.transaction(async (trx) => {
+         await db.update(briefs).set({invoiceId: getDraftInvoice.id,}).where(eq(briefs.id, brief.id)).returning()
+      })
+   } else {
       await db.transaction(async (trx) => {
          // Create invoice
-         const [inserted] = await db.insert(invoice).values({organizationId: brief.organizationId, writer: brief.writer!}).returning();
+         const [inserted] = await db.insert(invoice).values({
+            organizationId: brief.organizationId,
+            writer: brief.writer!
+         }).returning();
 
          // update briefs
-         await db.transaction(async (trx) => {
-            await db.update(briefs).set({invoiceId: inserted.id,}).where(eq(briefs.id, brief.id)).returning()
-         })
-
+         await db.update(briefs).set({invoiceId: inserted.id,}).where(eq(briefs.id, brief.id)).returning();
       })
-   } catch (error) {
-      console.error("Failed to create invoice", error)
    }
 }
