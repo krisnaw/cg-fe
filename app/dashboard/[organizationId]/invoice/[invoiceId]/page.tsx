@@ -3,9 +3,9 @@ import {redirect} from "next/navigation";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import {Separator} from "@/components/ui/separator";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
 import {getBriefsByInvoiceId} from "@/db/query/brief.query";
 import {getInvoiceByOrgAndId} from "@/db/query/invoice.query";
+import {BriefList} from "@/components/brief/brief-list";
 
 type Props = {
    params: Promise<{ organizationId: string, invoiceId: string }>
@@ -55,7 +55,7 @@ export default async function InvoiceDetailPage({params}: Props) {
                </Badge>
             </CardHeader>
             <Separator />
-            <CardContent className="grid gap-6 pt-6">
+            <CardContent>
                <div className="grid gap-2">
                   <span className="text-sm text-muted-foreground">Organization</span>
                   <span className="font-medium">{organizationName}</span>
@@ -77,31 +77,12 @@ export default async function InvoiceDetailPage({params}: Props) {
                <CardDescription>Briefs linked to this invoice.</CardDescription>
             </CardHeader>
             <Separator />
-            <CardContent className="pt-6">
+            <CardContent>
                {relatedBriefs?.length ? (
-                  <Table>
-                     <TableHeader>
-                        <TableRow>
-                           <TableHead>Name</TableHead>
-                           <TableHead>Organization</TableHead>
-                           <TableHead>Writer</TableHead>
-                           <TableHead>Status</TableHead>
-                        </TableRow>
-                     </TableHeader>
-                     <TableBody>
-                        {relatedBriefs.map((brief) => (
-                            <TableRow key={brief.id}>
-                               <TableCell className="font-medium">{brief.name}</TableCell>
-                               <TableCell>{brief.organization?.name ?? organizationName}</TableCell>
-                               <TableCell>{brief.writerUser?.name ?? brief.writer ?? "—"}</TableCell>
-                               <TableCell className="capitalize">{brief.status}</TableCell>
-                            </TableRow>
-                        ))}
-                     </TableBody>
-                  </Table>
-               ) : (
-                  <p className="text-sm text-muted-foreground">No related briefs for this invoice.</p>
-               )}
+                  <BriefList briefs={relatedBriefs} organizationId={organizationId} />
+                ) : (
+                   <p className="text-sm text-muted-foreground">No related briefs for this invoice.</p>
+                )}
             </CardContent>
          </Card>
        </div>
