@@ -17,7 +17,11 @@ export type BriefItemProps = {
 export function BriefItem({brief, organizationId}: BriefItemProps) {
   return (
     <TableRow>
-      <TableCell>{brief.name}</TableCell>
+      <TableCell className="font-medium">
+        <Link href={`/dashboard/${organizationId}/brief/${brief.id}`} className="hover:underline">
+          {brief.name}
+        </Link>
+      </TableCell>
       <TableCell>
         <div className="flex -space-x-2 overflow-hidden">
           <Tooltip>

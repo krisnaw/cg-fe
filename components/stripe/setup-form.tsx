@@ -21,10 +21,9 @@ const SetupForm = () => {
             //`Elements` instance that was used to create the Payment Element
             elements,
             confirmParams: {
-                return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings/payment-method`,
+                return_url: `https://localhost:3000/dashboard/stripe/pm/success`,
             },
         });
-
 
 
         if (error) {
