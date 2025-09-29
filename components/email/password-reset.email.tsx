@@ -20,13 +20,13 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
        <Html lang="en" dir="ltr">
           <Tailwind>
              <Head />
-             <Preview>Reset your password - Action required</Preview>
+             <Preview>Reset your password - Action requigreen</Preview>
              <Body className="bg-gray-100 font-sans py-[40px]">
                 <Container className="bg-white rounded-[8px] shadow-sm max-w-[600px] mx-auto p-[40px]">
                    {/* Header */}
                    <Section>
                       <Heading className="text-[28px] font-bold text-gray-900 text-center mb-[32px] mt-0">
-                         Password Reset Request 🔐
+                         Reset your password 🔐
                       </Heading>
                    </Section>
 
@@ -44,7 +44,7 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                       <Section className="text-center mb-[32px]">
                          <Button
                              href={resetUrl}
-                             className="bg-red-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
+                             className="bg-green-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
                          >
                             Reset Your Password
                          </Button>
@@ -58,20 +58,6 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                    {/* Security Notice */}
                    <Section>
                       <Hr className="border-gray-200 my-[32px]" />
-
-                      <Text className="text-[16px] text-gray-700 leading-[24px] mb-[16px]">
-                         <strong>Important Security Information:</strong>
-                      </Text>
-
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[16px]">
-                         • If you didn't request this password reset, please ignore this email - your password will remain unchanged
-                      </Text>
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[16px]">
-                         • Never share your password with anyone
-                      </Text>
-                      <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
-                         • Choose a strong password that includes letters, numbers, and special characters
-                      </Text>
 
                       <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
                          If you're having trouble with the button above, copy and paste the following link into your browser:
@@ -94,15 +80,7 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                    <Hr className="border-gray-200 my-[32px]" />
                    <Section>
                       <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0">
-                         © 2025 Your Company Name. All rights reserved.
-                      </Text>
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0 mt-[8px]">
-                         123 Business Street, Suite 100, Jakarta, ID 12345
-                      </Text>
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0 mt-[8px]">
-                         <Link href="https://example.com/unsubscribe" className="text-gray-500 no-underline">
-                            Unsubscribe
-                         </Link>
+                         © 2025 {process.env.APP_NAME}. All rights reserved.
                       </Text>
                    </Section>
                 </Container>
