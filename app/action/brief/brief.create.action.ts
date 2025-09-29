@@ -1,15 +1,19 @@
 "use server"
 
 import {ActionResponse} from "@/lib/types";
-import {briefInsertSchema, briefs, briefSelectSchema} from "@/db/schema/brief.schema";
+import {briefInsertSchema, BriefModel, briefs} from "@/db/schema/brief.schema";
 import {z} from "zod";
 import {db} from "@/db/db-connection";
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
 import {getUserByRoleAndOrgId} from "@/db/query/writer.query";
+import {Resend} from "resend";
+import PasswordResetEmail from "@/components/email/password-reset.email";
 
 const knock = new Knock({ apiKey: process.env.KNOCK_SECRET_API_KEY });
 const work_flow = "brief-was-created"
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export type BriefData = z.infer<typeof briefInsertSchema>;
 
 
@@ -43,7 +47,7 @@ export async function createBrief(formData: BriefData): Promise<ActionResponse> 
    }
 }
 
-export async function sendKnockNotification(brief: z.infer<typeof briefSelectSchema>) {
+export async function sendKnockNotification(brief: BriefModel) {
    const payload = {
       deadline: brief.dueDate.toDateString(),
       subject: "Heads up! You have open brief to claims",
@@ -67,4 +71,14 @@ export async function sendKnockNotification(brief: z.infer<typeof briefSelectSch
          recipients: writerIds
       })
    }
+}
+
+export async function sendEmailNotification(brief: BriefModel) {
+   const url = `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`
+   await resend.emails.send({
+      from: `${process.env.APP_NAME} <onboarding@resend.dev>`,
+      to: 'krisna.w2010@gmail.com',
+      subject: 'Reset Password Notification',
+      react: PasswordResetEmail({ resetUrl: url}),
+   });
 }
