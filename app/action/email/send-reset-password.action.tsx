@@ -11,12 +11,11 @@ type Props = {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function sendResetPasswordEmail({ to, subject, url} : Props) {
-   console.log(to, subject, url)
-   const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
+export async function sendResetPasswordNotification({ to, subject, url} : Props) {
+   await resend.emails.send({
+      from: `${process.env.APP_NAME} <onboarding@resend.dev>`,
       to: ['krisna.w2010@gmail.com'],
-      subject: 'Reset Password',
-      react: PasswordResetEmail({ name: "Krisna", resetUrl: url}),
+      subject: 'Reset Password Notification',
+      react: PasswordResetEmail({ resetUrl: url}),
    });
 }

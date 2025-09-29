@@ -5,7 +5,7 @@ import * as schema from "@/db/schema/auth-schema";
 import {nextCookies} from "better-auth/next-js";
 import {organization} from "better-auth/plugins";
 import {ac, admin, manager, member, owner, writer} from "./permissions"
-import {sendResetPasswordEmail} from "@/app/action/email/send-reset-password.action";
+import {sendResetPasswordNotification} from "@/app/action/email/send-reset-password.action";
 
 export const auth = betterAuth({
    trustedOrigins: [
@@ -62,7 +62,7 @@ export const auth = betterAuth({
       enabled: true,
       sendResetPassword: async ({user, url, token}, request) => {
          const resetURL = `${process.env.RAILWAY_PUBLIC_DOMAIN}${url}`;
-         await sendResetPasswordEmail({
+         await sendResetPasswordNotification({
             to: user.email,
             subject: "Reset your password",
             url: resetURL,

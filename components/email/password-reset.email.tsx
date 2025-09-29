@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Body, Button, Container, Heading, Hr, Link, Preview, Section, Text,} from '@react-email/components';
+import {Body, Button, Container, Heading, Hr, Preview, Section, Text,} from '@react-email/components';
 import {FooterEmail} from "@/components/email/common/footer.email";
 import {LayoutEmail} from "@/components/email/common/layout.email";
 
-const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}) => {
+const ResetPasswordEmail = ({resetUrl} : { resetUrl: string}) => {
 
    return (
        <LayoutEmail>
@@ -19,12 +19,12 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
 
                 {/* Main Content */}
                 <Section>
-                   <Text className="text-[18px] text-gray-700 leading-[28px] mb-[24px]">
-                      Hi {name},
+                   <Text className="text-[18px] font-bold text-gray-700 leading-[28px] mb-[24px]">
+                      Hello!
                    </Text>
 
                    <Text className="text-[16px] text-gray-600 leading-[24px] mb-[24px]">
-                      We received a request to reset the password for your account. If you made this request, click the button below to create a new password.
+                      You are receiving this email because we received a password reset request for your account.
                    </Text>
 
                    {/* CTA Button */}
@@ -33,34 +33,31 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                           href={resetUrl}
                           className="bg-green-600 text-white px-[32px] py-[16px] rounded-[8px] text-[16px] font-semibold no-underline box-border inline-block"
                       >
-                         Reset Your Password
+                         Reset Password
                       </Button>
                    </Section>
 
-                   <Text className="text-[14px] text-gray-500 leading-[20px] mb-[24px] text-center">
-                      This link will expire in 24 hours for security reasons.
+                   <Text className="text-[16px] text-gray-600 leading-[24px] mb-[24px]">
+                      This password reset link will expire in 15 minutes.
+                   </Text>
+
+                   <Text className="text-[16px] text-gray-600 leading-[24px] mb-[24px]">
+                      If you did not request a password reset, no further action is required.
                    </Text>
                 </Section>
 
+                <Hr className="border-gray-200 my-1" />
                 {/* Security Notice */}
                 <Section>
-                   <Hr className="border-gray-200 my-[32px]" />
 
                    <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
-                      If you're having trouble with the button above, copy and paste the following link into your browser:
+                      If you're having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:
                    </Text>
 
                    <Text className="text-[12px] text-gray-500 leading-[16px] mb-[24px] break-all bg-gray-50 p-[12px] rounded-[4px] border border-gray-200">
                       {resetUrl}
                    </Text>
 
-                   <Text className="text-[14px] text-gray-600 leading-[20px] mb-[24px]">
-                      If you continue to have problems or didn't request this reset, please contact our support team at{' '}
-                      <Link href="mailto:support@example.com" className="text-blue-600 no-underline">
-                         support@example.com
-                      </Link>
-                      .
-                   </Text>
                 </Section>
 
                 {/* Footer */}
