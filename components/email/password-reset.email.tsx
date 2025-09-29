@@ -13,6 +13,7 @@ import {
    Tailwind,
    Text,
 } from '@react-email/components';
+import {FooterEmail} from "@/components/email/common/footer.email";
 
 const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}) => {
 
@@ -26,7 +27,7 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                    {/* Header */}
                    <Section>
                       <Heading className="text-[28px] font-bold text-gray-900 text-center mb-[32px] mt-0">
-                         Reset your password 🔐
+                         Reset your password
                       </Heading>
                    </Section>
 
@@ -77,12 +78,8 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
                    </Section>
 
                    {/* Footer */}
-                   <Hr className="border-gray-200 my-[32px]" />
-                   <Section>
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0">
-                         © 2025 {process.env.APP_NAME}. All rights reserved.
-                      </Text>
-                   </Section>
+                   <FooterEmail />
+
                 </Container>
              </Body>
           </Tailwind>

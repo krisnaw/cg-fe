@@ -13,6 +13,7 @@ import {
    Tailwind,
    Text,
 } from '@react-email/components';
+import {FooterEmail} from "@/components/email/common/footer.email";
 
 const BriefAssignmentEmail = (props: { userName?: "there" | undefined; companyName?: "Company Name" | undefined; briefTitle?: "BriefTitle" | undefined; dueDate?: "Date" | undefined; price?: "Price" | undefined; projectUrl?: "https://example.com/project-dashboard" | undefined; clientContactEmail?: "client@company.com" | undefined; }) => {
    const {
@@ -171,24 +172,7 @@ const BriefAssignmentEmail = (props: { userName?: "there" | undefined; companyNa
                    </Section>
 
                    {/* Footer */}
-                   <Hr className="border-gray-200 my-[32px]" />
-                   <Section>
-                      <Text className="text-[14px] text-gray-700 leading-[20px] mb-[16px] text-center">
-                         Best of luck with your project! We're excited to see what you create. 🚀
-                      </Text>
-
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0">
-                         © 2025 Your Company Name. All rights reserved.
-                      </Text>
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0 mt-[8px]">
-                         123 Business Street, Suite 100, Jakarta, ID 12345
-                      </Text>
-                      <Text className="text-[12px] text-gray-500 leading-[16px] text-center m-0 mt-[8px]">
-                         <Link href="https://example.com/unsubscribe" className="text-gray-500 no-underline">
-                            Unsubscribe
-                         </Link>
-                      </Text>
-                   </Section>
+                   <FooterEmail />
                 </Container>
              </Body>
           </Tailwind>
