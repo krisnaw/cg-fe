@@ -8,7 +8,7 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
    return (
        <LayoutEmail>
           <Preview>Reset your password - Action required</Preview>
-          <Body className="bg-gray-100 font-sans py-[40px]">
+          <Body className="bg-gray-100 font-sans py-[40px] px-1 sm:px-0">
              <Container className="bg-white rounded-[8px] shadow-sm max-w-[600px] mx-auto p-[40px]">
                 {/* Header */}
                 <Section>
