@@ -20,7 +20,7 @@ const ResetPasswordEmail = ({name, resetUrl} : { name: string, resetUrl: string}
        <Html lang="en" dir="ltr">
           <Tailwind>
              <Head />
-             <Preview>Reset your password - Action requigreen</Preview>
+             <Preview>Reset your password - Action required</Preview>
              <Body className="bg-gray-100 font-sans py-[40px]">
                 <Container className="bg-white rounded-[8px] shadow-sm max-w-[600px] mx-auto p-[40px]">
                    {/* Header */}
