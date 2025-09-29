@@ -8,7 +8,7 @@ import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
 import {getUserByRoleAndOrgId} from "@/db/query/writer.query";
 import {Resend} from "resend";
-import PasswordResetEmail from "@/components/email/password-reset.email";
+import BriefOpenEmail from "@/components/email/brief/brief-open.email";
 
 const knock = new Knock({ apiKey: process.env.KNOCK_SECRET_API_KEY });
 const work_flow = "brief-was-created"
@@ -33,6 +33,7 @@ export async function createBrief(formData: BriefData): Promise<ActionResponse> 
       const [inserted] = await db.insert(briefs).values(validate.data).returning()
 
       await sendKnockNotification(inserted)
+      await sendEmailNotification(inserted)
 
       return {
          success: true,
@@ -78,7 +79,12 @@ export async function sendEmailNotification(brief: BriefModel) {
    await resend.emails.send({
       from: `${process.env.APP_NAME} <onboarding@resend.dev>`,
       to: 'krisna.w2010@gmail.com',
-      subject: 'Reset Password Notification',
-      react: PasswordResetEmail({ resetUrl: url}),
+      subject: 'Brief Open For Claims',
+      react: BriefOpenEmail({
+         companyName: "vercel",
+         briefTitle : brief.name,
+         price : brief.currency + brief.price,
+         claimUrl: url,
+         dueDate: brief.dueDate.toDateString(), }),
    });
 }
