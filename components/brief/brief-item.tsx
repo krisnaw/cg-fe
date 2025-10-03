@@ -3,11 +3,11 @@ import Link from "next/link";
 import {TableCell, TableRow} from "@/components/ui/table";
 import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
-import {ButtonDeleteBrief} from "@/components/brief/button-delete-brief";
 import {Button} from "@/components/ui/button";
 import {ArrowRight, Pencil} from "lucide-react";
 import {type BriefWithUsers} from "@/db/types/brief.types";
 import LoadingIndicator from "@/components/loading-indicator";
+import {ButtonGroup} from "@/components/ui/button-group"
 
 export type BriefItemProps = {
   brief: BriefWithUsers
@@ -59,17 +59,13 @@ export function BriefItem({brief, organizationId}: BriefItemProps) {
         <BriefStatusBadge status={brief.status}/>
       </TableCell>
       <TableCell>{brief.dueDate?.toDateString?.() ?? "-"}</TableCell>
-      <TableCell className="text-right">
-        <div className="flex flex-wrap items-center justify-end gap-2">
+      <TableCell className="flex float-right">
+        <ButtonGroup>
+
+
           <Tooltip>
             <TooltipTrigger asChild>
-              <ButtonDeleteBrief briefId={brief.id}/>
-            </TooltipTrigger>
-            <TooltipContent>Delete brief</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button asChild size="icon">
+              <Button asChild size="sm" variant="outline">
                 <Link href={`/dashboard/${organizationId}/brief/${brief.id}/edit`}>
                   <Pencil />
                 </Link>
@@ -77,17 +73,21 @@ export function BriefItem({brief, organizationId}: BriefItemProps) {
             </TooltipTrigger>
             <TooltipContent>Edit brief</TooltipContent>
           </Tooltip>
+
+
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button asChild variant="outline" size="icon">
+              <Button asChild variant="outline" size="sm">
                 <Link href={`/dashboard/${organizationId}/brief/${brief.id}`}>
-                   <LoadingIndicator><ArrowRight/></LoadingIndicator>
+                  <LoadingIndicator><ArrowRight/></LoadingIndicator>
                 </Link>
               </Button>
             </TooltipTrigger>
             <TooltipContent>View brief</TooltipContent>
           </Tooltip>
-        </div>
+
+        </ButtonGroup>
+
       </TableCell>
     </TableRow>
   )
