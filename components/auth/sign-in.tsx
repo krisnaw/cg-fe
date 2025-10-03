@@ -10,9 +10,9 @@ import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import SignAlert from "@/components/auth/sign-alert";
 import {signInAction} from "@/app/action/auth/sign-in.action";
-import {Loader2} from "lucide-react";
 import {ActionResponse} from "@/lib/types";
 import {toast} from "sonner";
+import {Spinner} from "@/components/ui/spinner";
 
 export default function SignIn() {
    const router = useRouter();
@@ -98,7 +98,7 @@ export default function SignIn() {
 
                       <Button disabled={isPending} type="submit" className="w-full">
                          Login
-                         {isPending && <Loader2 className="animate-spin"/>}
+                         {isPending && <Spinner /> }
                       </Button>
                    </div>
                 </CardContent>

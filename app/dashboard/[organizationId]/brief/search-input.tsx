@@ -1,8 +1,9 @@
 "use client"
-import {Input} from "@/components/ui/input";
 import {useQueryState} from "nuqs";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {BRIEF_STATUS_TEXT} from "@/lib/brief-status";
+import {InputGroup, InputGroupAddon, InputGroupInput} from "@/components/ui/input-group";
+import {SearchIcon} from "lucide-react";
 
 const sortOptions = [
    {label: "Due Soon", value: "asc"},
@@ -22,13 +23,18 @@ export default function SearchInput() {
    return (
        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <label className="sr-only" htmlFor="brief-search">Search briefs</label>
-          <Input
-              id="brief-search"
-              value={name ?? ""}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="Search briefs..."
-              className="w-full sm:max-w-sm"
-          />
+         <InputGroup>
+           <InputGroupInput
+
+             id="brief-search"
+             value={name ?? ""}
+             onChange={(event) => setName(event.target.value)}
+             placeholder="Search briefs..."
+           />
+           <InputGroupAddon>
+             <SearchIcon />
+           </InputGroupAddon>
+         </InputGroup>
 
           <Select value={sort ?? "asc"} onValueChange={(value) => setSort(value)}>
              <SelectTrigger className="w-full sm:w-[180px]">
