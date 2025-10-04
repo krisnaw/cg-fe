@@ -23,7 +23,7 @@ export default async function Page({
    ])
 
    return (
-       <div className="space-y-6">
+       <div className="space-y-10">
           <EditBriefForm brief={brief} managers={managers} writers={writers}/>
           <DeleteBriefForm briefId={brief.id}/>
        </div>
