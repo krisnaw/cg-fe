@@ -1,6 +1,15 @@
 import {Avatar, AvatarFallback, AvatarImage,} from "@/components/ui/avatar"
 import {Button} from "@/components/ui/button"
-import {Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemMedia, ItemTitle,} from "@/components/ui/item"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
+  ItemHeader,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 import {BriefWithUsers} from "@/db/types/brief.types";
 import {ButtonGroup} from "@/components/ui/button-group";
 import {ArrowRight, Pencil} from "lucide-react";
@@ -9,32 +18,33 @@ import Link from "next/link";
 
 export function BriefItem({brief } : {brief: BriefWithUsers} ) {
   return (
-    <Item variant="outline">
-      <ItemContent>
-        <ItemTitle>
+    <Item variant="outline" className="rounded-xl">
+
+      <ItemHeader className="border-b border-gray-200 pb-4 h-18 flex items-start">
+        <ItemTitle className="text-lg font-medium">
           {brief.name}
-          <BriefStatusBadge status={brief.status} />
         </ItemTitle>
+        <ItemActions className="flex flex-col">
+          <ButtonGroup>
+            <Button variant="outline" size="icon-sm" asChild>
+              <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}/edit`}>
+                <Pencil />
+              </Link>
+            </Button>
+            <Button variant="outline" size="icon-sm" asChild>
+              <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
+                <ArrowRight />
+              </Link>
+            </Button>
+          </ButtonGroup>
+        </ItemActions>
+      </ItemHeader>
+
+      <ItemContent>
         <ItemDescription dangerouslySetInnerHTML={{ __html: brief.description }} />
       </ItemContent>
-      <ItemActions>
 
-        <ButtonGroup>
-          <Button variant="outline" size="icon-sm" asChild>
-            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}/edit`}>
-              <Pencil />
-            </Link>
-          </Button>
-          <Button variant="outline" size="icon-sm" asChild>
-            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
-              <ArrowRight />
-            </Link>
-          </Button>
-        </ButtonGroup>
-
-
-      </ItemActions>
-      <ItemFooter>
+      <ItemFooter className="flex justify-betweenn items-center">
         <ItemMedia>
           <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
             <Avatar className="hidden sm:flex">
@@ -57,6 +67,7 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
             </Avatar>
           </div>
         </ItemMedia>
+        <BriefStatusBadge status={brief.status} />
       </ItemFooter>
 
     </Item>
