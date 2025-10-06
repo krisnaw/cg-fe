@@ -1,10 +1,7 @@
-import Link from "next/link"
-
-import {Button} from "@/components/ui/button"
-import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {getBriefByOrgId} from "@/db/query/brief.query";
+import {BriefItem} from "@/app/dashboard/[organizationId]/brief/brief-item";
+import {ItemGroup} from "@/components/ui/item";
 import SearchInput from "@/app/dashboard/[organizationId]/brief/search-input";
-import {BriefList} from "@/components/brief/brief-list";
 
 type BriefProps = {
    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -20,22 +17,13 @@ export default async function Page({searchParams, params}: BriefProps) {
    const briefs = await getBriefByOrgId(organizationId, search, sort, status)
 
    return (
-       <Card>
-          <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-             <div className="space-y-1">
-                <CardTitle>Briefs</CardTitle>
-                <CardDescription>Newest requests appear first.</CardDescription>
-             </div>
-             <CardAction>
-                <Button asChild>
-                   <Link href={`/dashboard/${organizationId}/brief/create`}>Create brief</Link>
-                </Button>
-             </CardAction>
-          </CardHeader>
-          <CardContent className="space-y-6">
-             <SearchInput />
-             <BriefList briefs={briefs} organizationId={organizationId}/>
-          </CardContent>
-       </Card>
+     <div className="space-y-6">
+       <SearchInput />
+       <ItemGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+         {briefs.map((brief) => (
+           <BriefItem key={brief.id} brief={brief} />
+         ))}
+       </ItemGroup>
+     </div>
    )
 }

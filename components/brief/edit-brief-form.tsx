@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {useActionState, useState} from "react"
-import {Loader2} from "lucide-react"
 import {useRouter} from "next/navigation"
 import {toast} from "sonner"
 
@@ -20,6 +19,7 @@ import {BriefDescriptions} from "@/components/brief/brief-description";
 import BriefPrice from "@/components/brief/brief-price";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 import type {MemberWithUser} from "@/db/types/auth.types";
+import {Spinner} from "@/components/ui/spinner";
 
 type EditBriefFormProps = {
   brief: BriefWithUsers
@@ -225,7 +225,7 @@ export function EditBriefForm({brief, managers, writers}: EditBriefFormProps) {
           </Button>
           <Button type="submit" disabled={isPending}>
             Save changes
-            {isPending ? <Loader2 className="ml-2 size-4 animate-spin"/> : null}
+            {isPending ?? <Spinner />}
           </Button>
         </CardFooter>
       </Card>

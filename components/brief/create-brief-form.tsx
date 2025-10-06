@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {useActionState} from "react";
+import {useActionState, useState} from "react";
 
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
@@ -38,6 +38,7 @@ export function CreateBriefForm({organizationId, writers, managers}: CreateBrief
       return now
    })
    const [description, setDescription] = React.useState<string>("")
+  const [currency, setCurrency] = useState<string>("USD")
    const router = useRouter();
 
    const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_, formData: FormData) => {
@@ -59,6 +60,8 @@ export function CreateBriefForm({organizationId, writers, managers}: CreateBrief
          dueDate: dueDateValue ? new Date(dueDateValue) : date ?? new Date(),
          wordCount: wordCount ? parseInt(wordCount) : 0,
       }
+
+      console.log("submit", submitData)
 
       const res = await createBrief(submitData)
 
@@ -175,7 +178,7 @@ export function CreateBriefForm({organizationId, writers, managers}: CreateBrief
                       </div>
 
                       <div>
-                         <BriefPrice />
+                         <BriefPrice price={100} currency={currency} setCurrency={setCurrency} />
                       </div>
                       <div className="grid gap-2">
                          <Label htmlFor="wordCount">Word Count</Label>
