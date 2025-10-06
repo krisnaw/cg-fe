@@ -45,9 +45,9 @@ export default async function Layout({children}: Readonly<{ children: React.Reac
               <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4"/>
             </div>
           </div>
-          <div className="pr-4 flex items-center gap-2">
+          <div className="pr-4 flex items-center gap-6">
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                   <Plus/>
                   Create
