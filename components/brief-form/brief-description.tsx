@@ -1,6 +1,6 @@
 "use client"
 
-import {ContentEditor} from "@/components/brief/content-editor";
+import {ContentEditor} from "@/components/common/content-editor";
 
 interface BriefDescriptionsProps {
    content: string,

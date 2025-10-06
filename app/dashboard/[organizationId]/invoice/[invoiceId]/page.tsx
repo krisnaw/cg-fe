@@ -5,7 +5,6 @@ import {Badge} from "@/components/ui/badge";
 import {Separator} from "@/components/ui/separator";
 import {getBriefsByInvoiceId} from "@/db/query/brief.query";
 import {getInvoiceByOrgAndId} from "@/db/query/invoice.query";
-import {BriefList} from "@/components/brief/brief-list";
 
 type Props = {
    params: Promise<{ organizationId: string, invoiceId: string }>
@@ -78,11 +77,7 @@ export default async function InvoiceDetailPage({params}: Props) {
             </CardHeader>
             <Separator />
             <CardContent>
-               {relatedBriefs?.length ? (
-                  <BriefList briefs={relatedBriefs} organizationId={organizationId} />
-                ) : (
-                   <p className="text-sm text-muted-foreground">No related briefs for this invoice.</p>
-                )}
+              show brief list
             </CardContent>
          </Card>
        </div>

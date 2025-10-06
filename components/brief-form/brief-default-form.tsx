@@ -1,6 +1,6 @@
 "use client"
 
-import {useActionState} from "react";
+import {useActionState, useState} from "react";
 import {Loader2} from "lucide-react";
 import {toast} from "sonner";
 import {Button} from "@/components/ui/button";
@@ -9,7 +9,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {upsertBriefDefaultSettings} from "@/app/action/brief-default/brief-default.upsert.action";
 import {ActionResponse} from "@/lib/types";
-import BriefPrice from "@/components/brief/brief-price";
+import BriefPrice from "@/components/brief-form/brief-price";
 
 interface BriefDefaultFormProps {
    organizationId: string
@@ -23,6 +23,8 @@ export function BriefDefaultForm({
                                     defaultPrice,
                                     defaultWordCount = 0,
                                  }: BriefDefaultFormProps) {
+
+  const [currency, setCurrency] = useState<string>(defaultCurrency);
    const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_, formData) => {
       const payload = {
          organizationId: formData.get("organizationId") as string,
@@ -57,7 +59,7 @@ export function BriefDefaultForm({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-6">
-            <BriefPrice defaultCurrency={defaultCurrency} defaultPrice={String(defaultPrice)} />
+            <BriefPrice currency={currency} setCurrency={setCurrency} price={defaultPrice} />
             <div className="grid gap-3">
               <Label htmlFor="wordcount">Word Count</Label>
               <Input

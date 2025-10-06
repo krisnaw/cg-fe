@@ -1,4 +1,4 @@
-import {BriefDefaultForm} from "@/components/brief/brief-default-form";
+import {BriefDefaultForm} from "@/components/brief-form/brief-default-form";
 import {getBriefDefaultByOrgId} from "@/db/query/brief-default.query";
 
 export default async function BriefDefaultPage({

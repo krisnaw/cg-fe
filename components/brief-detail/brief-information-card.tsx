@@ -2,10 +2,10 @@
 
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {BriefStatusBadge} from "@/components/brief/brief-status-badge"
-import {ButtonClose} from "@/components/brief/button-close"
-import {ButtonRequestRevision} from "@/components/brief/button-request-revision"
-import {ButtonResubmit} from "@/components/brief/button-resubmit"
-import {SubmitDraft} from "@/components/brief/submit-draft"
+import {ButtonClose} from "@/components/brief-action/button-close"
+import {ButtonRequestRevision} from "@/components/brief-action/button-request-revision"
+import {ButtonResubmit} from "@/components/brief-action/button-resubmit"
+import {SubmitDraft} from "@/components/brief-action/submit-draft"
 import type {BriefWithUsers} from "@/db/types/brief.types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
 

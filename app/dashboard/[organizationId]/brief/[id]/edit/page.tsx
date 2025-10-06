@@ -1,9 +1,9 @@
 import {redirect} from "next/navigation"
 
-import {EditBriefForm} from "@/components/brief/edit-brief-form"
+import {EditBriefForm} from "@/components/brief-form/edit-brief-form"
 import {getBriefById} from "@/db/query/brief.query"
 import {getUserByRoleAndOrgId} from "@/db/query/writer.query"
-import {DeleteBriefForm} from "@/components/brief/delete-brief-form";
+import {DeleteBriefForm} from "@/components/brief-form/delete-brief-form";
 
 export default async function Page({
                                       params,

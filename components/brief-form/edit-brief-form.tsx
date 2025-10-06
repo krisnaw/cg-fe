@@ -15,8 +15,8 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {ActionResponse} from "@/lib/types"
 import {cn} from "@/lib/utils"
-import {BriefDescriptions} from "@/components/brief/brief-description";
-import BriefPrice from "@/components/brief/brief-price";
+import {BriefDescriptions} from "@/components/brief-form/brief-description";
+import BriefPrice from "@/components/brief-form/brief-price";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 import type {MemberWithUser} from "@/db/types/auth.types";
 import {Spinner} from "@/components/ui/spinner";

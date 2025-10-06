@@ -1,5 +1,5 @@
 import {getBriefByOrgId} from "@/db/query/brief.query";
-import {BriefItem} from "@/app/dashboard/[organizationId]/brief/brief-item";
+import {BriefItem} from "@/components/brief/brief-item";
 import {ItemGroup} from "@/components/ui/item";
 import SearchInput from "@/app/dashboard/[organizationId]/brief/search-input";
 

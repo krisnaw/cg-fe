@@ -1,4 +1,4 @@
-import {CreateBriefForm} from "@/components/brief/create-brief-form";
+import {CreateBriefForm} from "@/components/brief-form/create-brief-form";
 import {getUserByRoleAndOrgId} from "@/db/query/writer.query";
 import {Suspense} from "react";
 

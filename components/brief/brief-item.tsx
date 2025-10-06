@@ -1,94 +1,61 @@
+import {Avatar, AvatarFallback, AvatarImage,} from "@/components/ui/avatar"
+import {Button} from "@/components/ui/button"
+import {Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemMedia, ItemTitle,} from "@/components/ui/item"
+import {BriefWithUsers} from "@/db/types/brief.types";
+import {ButtonGroup} from "@/components/ui/button-group";
+import {ArrowRight, Pencil} from "lucide-react";
+import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
 import Link from "next/link";
 
-import {TableCell, TableRow} from "@/components/ui/table";
-import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
-import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
-import {Button} from "@/components/ui/button";
-import {ArrowRight, Pencil} from "lucide-react";
-import {type BriefWithUsers} from "@/db/types/brief.types";
-import LoadingIndicator from "@/components/loading-indicator";
-import {ButtonGroup} from "@/components/ui/button-group"
-
-export type BriefItemProps = {
-  brief: BriefWithUsers
-  organizationId: string
-}
-
-export function BriefItem({brief, organizationId}: BriefItemProps) {
+export function BriefItem({brief } : {brief: BriefWithUsers} ) {
   return (
-    <TableRow>
-      <TableCell className="font-medium">
-        <Link href={`/dashboard/${organizationId}/brief/${brief.id}`} className="hover:underline">
+    <Item variant="outline">
+      <ItemContent>
+        <ItemTitle>
           {brief.name}
-        </Link>
-      </TableCell>
-      <TableCell>
-        <div className="flex -space-x-2 overflow-hidden">
-          <Tooltip>
-            <TooltipTrigger>
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt=""
-                src={brief.managerUser?.image ?? ""}
-                className="inline-block size-10 rounded-full outline -outline-offset-1 outline-black/5 ring-2 ring-white"
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              Manager: {brief.managerUser?.name ?? ""}
-            </TooltipContent>
-          </Tooltip>
-
-          {brief.writerUser && (
-            <Tooltip>
-              <TooltipTrigger>
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  src={brief.writerUser.image ?? ""}
-                  className="inline-block size-10 rounded-full outline -outline-offset-1 outline-black/5 ring-2 ring-white"
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                Writer: {brief.writerUser?.name ?? ""}
-              </TooltipContent>
-            </Tooltip>
-          )}
-        </div>
-      </TableCell>
-      <TableCell>
-        <BriefStatusBadge status={brief.status}/>
-      </TableCell>
-      <TableCell>{brief.dueDate?.toDateString?.() ?? "-"}</TableCell>
-      <TableCell className="flex float-right">
+          <BriefStatusBadge status={brief.status} />
+        </ItemTitle>
+        <ItemDescription dangerouslySetInnerHTML={{ __html: brief.description }} />
+      </ItemContent>
+      <ItemActions>
         <ButtonGroup>
-
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button asChild size="sm" variant="outline">
-                <Link href={`/dashboard/${organizationId}/brief/${brief.id}/edit`}>
-                  <Pencil />
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Edit brief</TooltipContent>
-          </Tooltip>
-
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button asChild variant="outline" size="sm">
-                <Link href={`/dashboard/${organizationId}/brief/${brief.id}`}>
-                  <LoadingIndicator><ArrowRight/></LoadingIndicator>
-                </Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>View brief</TooltipContent>
-          </Tooltip>
-
+          <Button variant="outline" size="icon-sm" asChild>
+            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
+              <Pencil />
+            </Link>
+          </Button>
+          <Button variant="outline" size="icon-sm" asChild>
+            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
+              <ArrowRight />
+            </Link>
+          </Button>
         </ButtonGroup>
+      </ItemActions>
+      <ItemFooter>
+        <ItemMedia>
+          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+            <Avatar className="hidden sm:flex">
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Avatar className="hidden sm:flex">
+              <AvatarImage
+                src="https://github.com/maxleiter.png"
+                alt="@maxleiter"
+              />
+              <AvatarFallback>LR</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarImage
+                src="https://github.com/evilrabbit.png"
+                alt="@evilrabbit"
+              />
+              <AvatarFallback>ER</AvatarFallback>
+            </Avatar>
+          </div>
+        </ItemMedia>
+      </ItemFooter>
 
-      </TableCell>
-    </TableRow>
+    </Item>
   )
 }
