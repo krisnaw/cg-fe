@@ -7,6 +7,7 @@ import BriefActivities from "@/app/dashboard/[organizationId]/brief/[id]/brief-a
 import {BriefInformationCard} from "@/components/brief-detail/brief-information-card";
 import {BriefAssignedCard} from "@/components/brief-detail/brief-assigned-card";
 import {BriefDiscussionCard} from "@/components/brief-detail/brief-discussion-card";
+import {Pencil} from "lucide-react";
 
 export default async function BriefDetailPage({params}: { params: Promise<{ organizationId: string, id: number }> }) {
    const {organizationId, id} = await params;
@@ -29,11 +30,11 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
                          {brief.name}
                       </CardTitle>
                       <CardAction>
-                         <Button asChild variant="outline">
-                            <Link href={`/dashboard/${organizationId}/brief/${brief.id}/edit`}>
-                               Edit
-                            </Link>
-                         </Button>
+                        <Button variant="outline" size="icon-sm" asChild>
+                          <Link href={`/dashboard/${organizationId}/brief/${brief.id}/edit`}>
+                            <Pencil />
+                          </Link>
+                        </Button>
                       </CardAction>
                    </CardHeader>
                    <CardContent>

@@ -18,9 +18,10 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
         <ItemDescription dangerouslySetInnerHTML={{ __html: brief.description }} />
       </ItemContent>
       <ItemActions>
+
         <ButtonGroup>
           <Button variant="outline" size="icon-sm" asChild>
-            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
+            <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}/edit`}>
               <Pencil />
             </Link>
           </Button>
@@ -30,6 +31,8 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
             </Link>
           </Button>
         </ButtonGroup>
+
+
       </ItemActions>
       <ItemFooter>
         <ItemMedia>
