@@ -31,7 +31,7 @@ export function DeleteBriefForm({briefId}: DeleteBriefFormProps) {
   return (
     <form onSubmit={onSubmit}>
       <input type="hidden" name="briefId" value={briefId}/>
-      <Item variant="outline" className="border-destructive max-w-xl">
+      <Item variant="outline" className="border-destructive">
         <ItemContent>
           <ItemTitle className="text-destructive">Delete brief</ItemTitle>
           <ItemDescription className="text-destructive">

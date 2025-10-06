@@ -8,7 +8,6 @@ import {NavSecondary} from "@/components/nav-secondary"
 import {NavUser} from "@/components/nav-user"
 import {Sidebar, SidebarContent, SidebarFooter, SidebarHeader,} from "@/components/ui/sidebar"
 import {TeamSwitcher} from "@/components/sidebar/team-switcher"
-import {Separator} from "@/components/ui/separator";
 import {OrganizationType} from "@/lib/types";
 
 const data = {
@@ -150,7 +149,6 @@ export function AppSidebar({organizationId, user, organizations, ...props}: AppS
           <SidebarHeader>
              <TeamSwitcher organizationId={organizationId} organizations={organizations}/>
           </SidebarHeader>
-          <Separator orientation="horizontal"/>
           <SidebarContent>
 
              {organizationId && <NavMain organizationId={organizationId} items={data.navMain}/>}
@@ -160,7 +158,6 @@ export function AppSidebar({organizationId, user, organizations, ...props}: AppS
              <NavSecondary items={data.navSecondary} className="mt-auto"/>
 
           </SidebarContent>
-          <Separator orientation="horizontal"/>
           <SidebarFooter>
              <NavUser user={user}/>
           </SidebarFooter>
