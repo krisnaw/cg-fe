@@ -62,25 +62,22 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
 
       <ItemFooter className="flex justify-betweenn items-center">
         <ItemMedia>
-          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
-            <Avatar className="hidden sm:flex">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Avatar className="hidden sm:flex">
-              <AvatarImage
-                src="https://github.com/maxleiter.png"
-                alt="@maxleiter"
-              />
-              <AvatarFallback>LR</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage
-                src="https://github.com/evilrabbit.png"
-                alt="@evilrabbit"
-              />
-              <AvatarFallback>ER</AvatarFallback>
-            </Avatar>
+          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+
+            {brief.managerUser && (
+              <Avatar className="border">
+                <AvatarImage src={brief.managerUser?.image ?? ""} alt="Image"/>
+                <AvatarFallback>{brief.managerUser?.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
+            )}
+
+            {brief.writerUser && (
+              <Avatar className="border">
+                <AvatarImage src={brief.writerUser?.image ?? ""} alt="Image"/>
+                <AvatarFallback>{brief.writerUser?.name?.charAt(0)}</AvatarFallback>
+              </Avatar>
+            )}
+
           </div>
         </ItemMedia>
         <BriefStatusBadge status={brief.status} />
