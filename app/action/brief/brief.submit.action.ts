@@ -9,6 +9,8 @@ import {briefs, briefSelectSchema} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
+import {briefActivities} from "@/db/schema/brief-activities.schema";
+import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
 
 const knock = new Knock({apiKey: process.env.KNOCK_SECRET_API_KEY});
 const BRIEF_WORKFLOW = "brief-was-created"
@@ -52,6 +54,7 @@ export async function briefSubmitAction(formData: FormData): Promise<ActionRespo
          }
       }
 
+      await storeBriefActivity(updated)
       await sendBriefSubmittedNotification(updated)
 
       revalidatePath("/", "layout")
@@ -66,6 +69,18 @@ export async function briefSubmitAction(formData: FormData): Promise<ActionRespo
          success: false,
          message: "Failed to submit draft",
       }
+   }
+}
+
+async function storeBriefActivity(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      await db.insert(briefActivities).values({
+         briefId: brief.id,
+         actor: brief.writer,
+         message: BRIEF_ACTIVITY_MESSAGES.brief_draft_submitted,
+      })
+   } catch (error) {
+      console.error("Failed to store brief activity for draft submission", error)
    }
 }
 
