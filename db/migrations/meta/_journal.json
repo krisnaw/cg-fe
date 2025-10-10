@@ -50,6 +50,13 @@
       "when": 1758855538317,
       "tag": "0006_salty_scream",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1760073323130,
+      "tag": "0007_complete_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }
