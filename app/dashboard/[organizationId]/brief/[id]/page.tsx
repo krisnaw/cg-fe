@@ -60,7 +60,7 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
 
           <BriefAssignedCard brief={brief}/>
 
-          <BriefActivities/>
+          <BriefActivities activities={activities} />
         </div>
       </div>
     </div>

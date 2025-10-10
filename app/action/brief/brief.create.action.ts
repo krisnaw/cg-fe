@@ -10,6 +10,7 @@ import {getUserByRoleAndOrgId} from "@/db/query/writer.query";
 import {Resend} from "resend";
 import BriefOpenEmail from "@/components/email/brief/brief-open.email";
 import {briefActivities} from "@/db/schema/brief-activities.schema";
+import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
 
 const knock = new Knock({apiKey: process.env.KNOCK_SECRET_API_KEY});
 const work_flow = "brief-was-created"
@@ -53,7 +54,7 @@ async function storeBriefActivity(brief: BriefModel) {
   await db.insert(briefActivities).values({
     briefId: brief.id,
     actor: brief.manager,
-    message: "Brief was created"
+    message: BRIEF_ACTIVITY_MESSAGES.brief_created
   })
 }
 
