@@ -1,6 +1,6 @@
 "use server"
 import {db} from "@/db/db-connection";
-import {eq} from "drizzle-orm";
+import {desc, eq} from "drizzle-orm";
 import {briefActivities} from "@/db/schema/brief-activities.schema";
 
 export async function getActivitiesByBriefId(briefId: number) {
@@ -8,7 +8,8 @@ export async function getActivitiesByBriefId(briefId: number) {
     with: {
       actorUser: true,
     },
-    where: eq(briefActivities.briefId, briefId)
+    where: eq(briefActivities.briefId, briefId),
+    orderBy: [desc(briefActivities.createdAt)],
   })
 
   return activities ?? null;

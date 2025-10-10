@@ -9,6 +9,8 @@ import {eq} from "drizzle-orm";
 import {revalidatePath} from "next/cache";
 import {invoice} from "@/db/schema/invoice.schema";
 import {getDraftInvoiceByOrgIdAndWriterId} from "@/db/query/invoice.query";
+import {briefActivities} from "@/db/schema/brief-activities.schema";
+import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
 
 const closeBriefSchema = z.object({
    briefId: z.number(),
@@ -44,6 +46,7 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
          }
       }
 
+      await storeBriefClosedActivity(updated)
       revalidatePath("/", "layout")
 
       // TODO: CREATE/UPDATE invoice
@@ -81,5 +84,17 @@ async function updateOrCreateInvoice(brief: z.infer<typeof briefSelectSchema>) {
          // update briefs
          await db.update(briefs).set({invoiceId: inserted.id,}).where(eq(briefs.id, brief.id)).returning();
       })
+   }
+}
+
+async function storeBriefClosedActivity(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      await db.insert(briefActivities).values({
+         briefId: brief.id,
+         actor: brief.manager,
+         message: BRIEF_ACTIVITY_MESSAGES.brief_closed,
+      })
+   } catch (error) {
+      console.error("Failed to store brief activity for closing brief", error)
    }
 }
