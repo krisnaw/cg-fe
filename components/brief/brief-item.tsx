@@ -13,8 +13,9 @@ import {
 import {BriefWithUsers} from "@/db/types/brief.types";
 import {ButtonGroup} from "@/components/ui/button-group";
 import {ArrowRight, Pencil} from "lucide-react";
-import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
 import Link from "next/link";
+import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
+import {stripTags} from "@/lib/stripHTMLTag";
 
 export function BriefItem({brief } : {brief: BriefWithUsers} ) {
   return (
@@ -41,7 +42,9 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
       </ItemHeader>
 
       <ItemContent>
-        <ItemDescription dangerouslySetInnerHTML={{ __html: brief.description }} />
+        <ItemDescription>
+          {stripTags(brief.description)}
+        </ItemDescription>
       </ItemContent>
 
       <ItemFooter className="flex justify-betweenn items-center">

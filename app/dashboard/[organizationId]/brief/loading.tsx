@@ -1,7 +1,13 @@
-import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Skeleton} from "@/components/ui/skeleton";
 
 export default function Loading() {
@@ -19,43 +25,28 @@ export default function Loading() {
         </CardAction>
       </CardHeader>
       <CardContent>
-          <Table>
-              <TableHeader>
-                  <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Created</TableHead>
-                      <TableHead>Updated</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-              </TableHeader>
-              <TableBody>
-                  {Array.from({ length: 5 }).map((_, index) => (
-                      <TableRow key={index}>
-                          <TableCell>
-                              <Skeleton className="h-4 w-8" />
-                          </TableCell>
-                          <TableCell>
-                              <Skeleton className="h-4 w-48" />
-                          </TableCell>
-                          <TableCell>
-                              <Skeleton className="h-4 w-32" />
-                          </TableCell>
-                          <TableCell>
-                              <Skeleton className="h-4 w-32" />
-                          </TableCell>
-                          <TableCell className="text-right">
-                              <div className="flex flex-wrap items-center justify-end gap-2">
-                                  <Skeleton className="h-8 w-16" />
-                                  <Skeleton className="h-8 w-16" />
-                              </div>
-                          </TableCell>
-                      </TableRow>
-                  ))}
-              </TableBody>
-          </Table>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {Array.from({length: 6}).map((_, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-border bg-card p-4 shadow-sm space-y-4"
+            >
+              <div className="space-y-2">
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                </div>
+                <Skeleton className="h-5 w-20" />
+              </div>
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
 }
-
