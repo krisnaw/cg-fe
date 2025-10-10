@@ -8,7 +8,7 @@ interface BriefAssignedCardProps {
 
 export function BriefAssignedCard({brief}: BriefAssignedCardProps) {
   return (
-    <Item variant="outline">
+    <Item variant="outline" className="shadow rounded-xl">
 
       <ItemHeader>
         <ItemTitle>Assigned</ItemTitle>
