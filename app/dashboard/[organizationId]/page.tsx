@@ -4,7 +4,6 @@ export default async function Page() {
          <div>
             Hey welcome to the Dashboard of your organization
          </div>
-
       </div>
    );
 }

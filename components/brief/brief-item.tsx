@@ -65,17 +65,37 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
           <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
 
             {brief.managerUser && (
-              <Avatar className="border">
-                <AvatarImage src={brief.managerUser?.image ?? ""} alt="Image"/>
-                <AvatarFallback>{brief.managerUser?.name?.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Avatar className="border">
+                    <AvatarImage
+                      src={brief.managerUser?.image ?? ""}
+                      alt={brief.managerUser?.name ?? "Manager"}
+                    />
+                    <AvatarFallback>
+                      {brief.managerUser?.name?.[0]?.toUpperCase() ?? "M"}
+                    </AvatarFallback>
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>{brief.managerUser?.name ?? "Manager"}</TooltipContent>
+              </Tooltip>
             )}
 
             {brief.writerUser && (
-              <Avatar className="border">
-                <AvatarImage src={brief.writerUser?.image ?? ""} alt="Image"/>
-                <AvatarFallback>{brief.writerUser?.name?.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Avatar className="border">
+                    <AvatarImage
+                      src={brief.writerUser?.image ?? ""}
+                      alt={brief.writerUser?.name ?? "Writer"}
+                    />
+                    <AvatarFallback>
+                      {brief.writerUser?.name?.[0]?.toUpperCase() ?? "W"}
+                    </AvatarFallback>
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>{brief.writerUser?.name ?? "Writer"}</TooltipContent>
+              </Tooltip>
             )}
 
           </div>
