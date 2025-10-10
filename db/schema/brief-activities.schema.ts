@@ -1,6 +1,7 @@
 import {integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {briefs} from "@/db/schema/brief.schema";
 import {user} from "@/db/schema/auth-schema";
+import {relations} from "drizzle-orm";
 
 export const briefActivities = pgTable('brief_activities', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -20,3 +21,10 @@ export const briefActivities = pgTable('brief_activities', {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 })
+
+export const briefActivitiesRelations = relations(briefActivities, ({one}) => ({
+  actorUser: one(user, {
+    fields: [briefActivities.actor],
+    references: [user.id],
+  }),
+}));
