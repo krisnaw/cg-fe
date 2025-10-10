@@ -3,6 +3,8 @@ import {Item, ItemContent, ItemHeader, ItemTitle} from "@/components/ui/item";
 import {BriefActivityWithUser} from "@/db/types/brief-activities.types";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {UserIcon} from "lucide-react";
+// @ts-ignore
+import {ago} from "time-ago";
 
 export default function BriefActivities({activities}: { activities: BriefActivityWithUser[] }) {
   return (
@@ -48,7 +50,7 @@ export default function BriefActivities({activities}: { activities: BriefActivit
                         </p>
                       </div>
                       <div className="text-right text-sm whitespace-nowrap text-gray-500">
-                        <time dateTime={activity.createdAt.toLocaleString()}>{activity.createdAt.toDateString()}</time>
+                        <time dateTime={ago(activity.createdAt, true)}>{ago(activity.createdAt, true)}</time>
                       </div>
                     </div>
                   </div>

@@ -177,6 +177,9 @@ dependencies:
   tailwindcss:
     specifier: ^4.1.13
     version: 4.1.14
+  time-ago:
+    specifier: ^0.2.1
+    version: 0.2.1
   uploadthing:
     specifier: ^7.7.4
     version: 7.7.4(next@15.5.4)(tailwindcss@4.1.14)
@@ -6379,6 +6382,10 @@ packages:
       minipass: 7.1.2
       minizlib: 3.1.0
       yallist: 5.0.0
+    dev: false
+
+  /time-ago@0.2.1:
+    resolution: {integrity: sha512-fQ3WQ5yPBoNefBgITR+kMnd5aWiKYhBNSgQH3FwpJgDCaVEmju7rWyP+Rk52KyQbRwQEnw3ox2yxcS4yMxgP+g==}
     dev: false
 
   /tiny-inflate@1.0.3:
