@@ -1,3 +1,5 @@
+"use client"
+
 import {Avatar, AvatarFallback, AvatarImage,} from "@/components/ui/avatar"
 import {Button} from "@/components/ui/button"
 import {
@@ -16,6 +18,7 @@ import {ArrowRight, Pencil} from "lucide-react";
 import Link from "next/link";
 import {BriefStatusBadge} from "@/components/brief/brief-status-badge";
 import {stripTags} from "@/lib/stripHTMLTag";
+import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 
 export function BriefItem({brief } : {brief: BriefWithUsers} ) {
   return (
@@ -27,16 +30,26 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
         </ItemTitle>
         <ItemActions className="flex flex-col">
           <ButtonGroup>
-            <Button variant="outline" size="icon-sm" asChild>
-              <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}/edit`}>
-                <Pencil />
-              </Link>
-            </Button>
-            <Button variant="outline" size="icon-sm" asChild>
-              <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
-                <ArrowRight />
-              </Link>
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon-sm" asChild>
+                  <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}/edit`}>
+                    <Pencil />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Edit brief</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon-sm" asChild>
+                  <Link href={`/dashboard/${brief.organizationId}/brief/${brief.id}`}>
+                    <ArrowRight />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>View brief</TooltipContent>
+            </Tooltip>
           </ButtonGroup>
         </ItemActions>
       </ItemHeader>

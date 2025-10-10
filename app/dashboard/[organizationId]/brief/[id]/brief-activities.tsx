@@ -1,112 +1,109 @@
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
+import {UserIcon} from "lucide-react";
 import {cn} from "@/lib/utils";
+import {Item, ItemContent, ItemHeader, ItemTitle} from "@/components/ui/item";
 
-type Activity = {
-   id: string;
-   actor: string;
-   role: "Manager" | "Writer" | "System";
-   action: string;
-   detail?: string;
-   timestamp: string;
-};
+const timeline = [
+  {
+    id: 1,
+    content: 'Applied to',
+    target: 'Front End Developer',
+    href: '#',
+    date: 'Sep 20',
+    datetime: '2020-09-20',
+    icon: UserIcon,
+    iconBackground: 'bg-gray-400',
+  },
+  {
+    id: 2,
+    content: 'Advanced to phone screening by',
+    target: 'Bethany Blake',
+    href: '#',
+    date: 'Sep 22',
+    datetime: '2020-09-22',
+    icon: UserIcon,
+    iconBackground: 'bg-blue-500',
+  },
+  {
+    id: 3,
+    content: 'Completed phone screening with',
+    target: 'Martha Gardner',
+    href: '#',
+    date: 'Sep 28',
+    datetime: '2020-09-28',
+    icon: UserIcon,
+    iconBackground: 'bg-green-500',
+  },
+  {
+    id: 4,
+    content: 'Advanced to interview by',
+    target: 'Bethany Blake',
+    href: '#',
+    date: 'Sep 30',
+    datetime: '2020-09-30',
+    icon: UserIcon,
+    iconBackground: 'bg-blue-500',
+  },
+  {
+    id: 5,
+    content: 'Completed interview with',
+    target: 'Katherine Snyder',
+    href: '#',
+    date: 'Oct 4',
+    datetime: '2020-10-04',
+    icon: UserIcon,
+    iconBackground: 'bg-green-500',
+  },
+]
 
-const mockActivities: Activity[] = [
-   {
-      id: "1",
-      actor: "Jordan Steele",
-      role: "Manager",
-      action: "updated the deadline",
-      detail: "Shifted launch to Sep 29 at 9:00 AM PST",
-      timestamp: "Today, 10:40 AM",
-   },
-   {
-      id: "2",
-      actor: "BriefSense",
-      role: "System",
-      action: "synced with Jira",
-      detail: "Ticket CGP-233 now marked as In Progress",
-      timestamp: "Today, 9:15 AM",
-   },
-   {
-      id: "3",
-      actor: "Priya Ghosh",
-      role: "Writer",
-      action: "left feedback on requirements",
-      detail: "Requested clarification on the partner asset specs",
-      timestamp: "Today, 8:02 AM",
-   },
-   {
-      id: "4",
-      actor: "Tanya Hidalgo",
-      role: "Writer",
-      action: "uploaded draft outline",
-      detail: "Outline includes updated brand tone guidance",
-      timestamp: "Yesterday, 5:32 PM",
-   },
-   {
-      id: "5",
-      actor: "Jordan Steele",
-      role: "Manager",
-      action: "shared reference deck",
-      detail: "Attached campaign learnings from Q2 refresh",
-      timestamp: "Yesterday, 2:11 PM",
-   },
-   {
-      id: "6",
-      actor: "BriefSense",
-      role: "System",
-      action: "notified stakeholders",
-      detail: "Sent Slack update to #cgp-briefs channel",
-      timestamp: "Mon, 4:57 PM",
-   },
-   {
-      id: "7",
-      actor: "Jordan Steele",
-      role: "Manager",
-      action: "created the brief",
-      detail: "Imported previous messaging pillars from CGP-198",
-      timestamp: "Mon, 3:05 PM",
-   },
-];
-
-const roleBadgeVariants: Record<Activity["role"], string> = {
-   Manager: "bg-blue-100 text-blue-800",
-   Writer: "bg-emerald-100 text-emerald-800",
-   System: "bg-slate-200 text-slate-800",
-};
-
-export default function BriefActivities() {
-   return (
-      <Card>
-         <CardHeader>
-            <CardTitle>Activities</CardTitle>
-         </CardHeader>
-         <CardContent>
-            <div className="relative max-h-80 space-y-6 overflow-y-auto overflow-x-visible border-l pl-6 pr-4">
-               {mockActivities.map((activity, index) => (
-                  <div key={activity.id} className="relative space-y-1">
-                     <span
-                        className={cn(
-                           "absolute -left-[30px] top-1/2 z-10 h-[13px] w-[13px] -translate-y-1/2 rounded-full border-2 border-background",
-                           index === 0 ? "bg-primary" : "bg-muted"
-                        )}
-                     />
-                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold">{activity.actor}</span>
-                        <Badge className={cn("text-xs", roleBadgeVariants[activity.role])}>{activity.role}</Badge>
-                     </div>
-                     <p className="text-sm text-muted-foreground">{activity.action}</p>
-                     {activity.detail ? (
-                        <p className="text-sm text-muted-foreground">{activity.detail}</p>
-                     ) : null}
-                     <p className="text-xs uppercase tracking-wide text-muted-foreground/80">
-                        {activity.timestamp}
-                     </p>
+export default function Example() {
+  return (
+    <Item variant="outline" className="shadow rounded-xl">
+      <ItemHeader>
+        <ItemTitle>
+          Brief Activities
+        </ItemTitle>
+      </ItemHeader>
+      <ItemContent className="max-h-96 overflow-auto">
+        <div className="flow-root">
+          <ul role="list" className="-mb-8">
+            {timeline.map((event, eventIdx) => (
+              <li key={event.id}>
+                <div className="relative pb-8">
+                  {eventIdx !== timeline.length - 1 ? (
+                    <span aria-hidden="true" className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" />
+                  ) : null}
+                  <div className="relative flex space-x-3">
+                    <div>
+                  <span
+                    className={cn(
+                      event.iconBackground,
+                      'flex size-8 items-center justify-center rounded-full ring-8 ring-white',
+                    )}
+                  >
+                    <event.icon aria-hidden="true" className="size-5 text-white" />
+                  </span>
+                    </div>
+                    <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                      <div>
+                        <p className="text-sm text-gray-500">
+                          {event.content}{' '}
+                          <a href={event.href} className="font-medium text-gray-900">
+                            {event.target}
+                          </a>
+                        </p>
+                      </div>
+                      <div className="text-right text-sm whitespace-nowrap text-gray-500">
+                        <time dateTime={event.datetime}>{event.date}</time>
+                      </div>
+                    </div>
                   </div>
-               ))}
-            </div>
-         </CardContent>
-      </Card>
-   );
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </ItemContent>
+    </Item>
+
+  )
 }
