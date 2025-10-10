@@ -9,6 +9,8 @@ import {briefs, briefSelectSchema} from "@/db/schema/brief.schema"
 import {ActionResponse} from "@/lib/types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
+import {briefActivities} from "@/db/schema/brief-activities.schema";
+import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
 
 const updateStatusSchema = z.object({
    briefId: z.number(),
@@ -49,6 +51,7 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
       }
 
       if (status === BRIEF_STATUS.REQUEST_REVISION) {
+         await storeRevisionRequestedActivity(updated)
          await sendRequestRevisionNotification(updated)
       }
 
@@ -68,6 +71,18 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
          success: false,
          message: "Failed to update status",
       }
+   }
+}
+
+async function storeRevisionRequestedActivity(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      await db.insert(briefActivities).values({
+         briefId: brief.id,
+         actor: brief.manager,
+         message: BRIEF_ACTIVITY_MESSAGES.brief_revision_requested,
+      })
+   } catch (error) {
+      console.error("Failed to store brief activity for revision request", error)
    }
 }
 
@@ -118,4 +133,3 @@ async function sendResubmittedNotification(brief: z.infer<typeof briefSelectSche
       console.error("Failed to send Knock notification for resubmitted draft", error)
    }
 }
-
