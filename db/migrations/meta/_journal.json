@@ -57,6 +57,13 @@
       "when": 1760073323130,
       "tag": "0007_complete_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1760185038682,
+      "tag": "0008_wonderful_northstar",
+      "breakpoints": true
     }
   ]
 }
