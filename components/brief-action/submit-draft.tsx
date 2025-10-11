@@ -1,7 +1,6 @@
 "use client"
 
 import {useActionState, useState} from "react"
-import {Loader2} from "lucide-react"
 import {useRouter} from "next/navigation"
 import {toast} from "sonner"
 
@@ -20,6 +19,7 @@ import {
 } from "@/components/ui/dialog"
 import {briefSubmitAction} from "@/app/action/brief/brief.submit.action"
 import {ActionResponse} from "@/lib/types"
+import {Spinner} from "@/components/ui/spinner";
 
 type SubmitDraftProps = {
    briefId: number
@@ -68,7 +68,6 @@ export function SubmitDraft({briefId, draftUrl}: SubmitDraftProps) {
                        id="draftUrl"
                        name="draftUrl"
                        type="url"
-                       placeholder="https://"
                        defaultValue={draftUrl ?? ""}
                        required
                        disabled={isPending}
@@ -82,7 +81,7 @@ export function SubmitDraft({briefId, draftUrl}: SubmitDraftProps) {
                    </DialogClose>
                    <Button type="submit" disabled={isPending}>
                       Submit Draft
-                      {isPending ? <Loader2 className="ml-2 size-4 animate-spin"/> : null}
+                      {isPending && <Spinner />}
                    </Button>
                 </DialogFooter>
              </form>
