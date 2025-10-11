@@ -8,8 +8,8 @@ import {useActionState} from "react";
 import {ActionResponse, InvitationType} from "@/lib/types";
 import {Button} from "@/components/ui/button";
 import {toast} from "sonner";
-import {Loader2} from "lucide-react";
 import {Badge} from "@/components/ui/badge";
+import {Spinner} from "@/components/ui/spinner";
 
 type InvitationListProps = {
   organizationId: string;
@@ -55,13 +55,15 @@ export default function InvitationList({organizationId, invitations}: Invitation
       <Card>
         <CardHeader>
           <CardTitle>Pending invites</CardTitle>
-          <CardDescription>Track outstanding invitations for this organization.</CardDescription>
+          <CardDescription>
+            Track the freelancers you’ve invited to join your team. Once they accept, they’ll appear in your active members list.
+          </CardDescription>
           <CardAction>
             <form action={formAction} className="inline-flex gap-2">
               <Input required name="email" id="email" type="email" placeholder="Enter email"/>
               <Button disabled={isPending} type={"submit"}>
                 Submit
-                {isPending && <Loader2 className="animate-spin" />}
+                {isPending && <Spinner />}
               </Button>
             </form>
           </CardAction>

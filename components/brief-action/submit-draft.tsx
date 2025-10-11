@@ -9,14 +9,14 @@ import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {
-   Dialog,
-   DialogClose,
-   DialogContent,
-   DialogDescription,
-   DialogFooter,
-   DialogHeader,
-   DialogTitle,
-   DialogTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import {briefSubmitAction} from "@/app/action/brief/brief.submit.action"
 import {ActionResponse} from "@/lib/types"
@@ -51,7 +51,7 @@ export function SubmitDraft({briefId, draftUrl}: SubmitDraftProps) {
    return (
        <Dialog open={open} onOpenChange={(value) => !isPending && setOpen(value)}>
           <DialogTrigger asChild>
-             <Button type="button">Submit Draft</Button>
+             <Button type="button" className="w-full">Submit Draft</Button>
           </DialogTrigger>
           <DialogContent>
              <form action={formAction} className="space-y-4">

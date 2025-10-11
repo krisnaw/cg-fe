@@ -22,9 +22,9 @@ import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 
 export function BriefItem({brief } : {brief: BriefWithUsers} ) {
   return (
-    <Item variant="outline" className="rounded-xl">
+    <Item variant="outline" className="rounded-xl shadow">
 
-      <ItemHeader className="border-b border-gray-200 pb-4 h-18 flex items-start">
+      <ItemHeader className="h-18 flex items-start">
         <ItemTitle className="text-lg font-medium">
           {brief.name}
         </ItemTitle>

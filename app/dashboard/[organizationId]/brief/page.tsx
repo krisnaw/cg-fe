@@ -40,13 +40,15 @@ export default async function Page({searchParams, params}: BriefProps) {
          </Empty>
        )}
 
-       <Suspense fallback={<div>Loading...</div>}>
-         <ItemGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-           {briefs.map((brief) => (
-             <BriefItem key={brief.id} brief={brief} />
-           ))}
-         </ItemGroup>
-       </Suspense>
+       <div className="mt-4">
+         <Suspense fallback={<div>Loading...</div>}>
+           <ItemGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+             {briefs.map((brief) => (
+               <BriefItem key={brief.id} brief={brief} />
+             ))}
+           </ItemGroup>
+         </Suspense>
+       </div>
 
      </div>
    )
