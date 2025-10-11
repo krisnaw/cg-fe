@@ -17,10 +17,12 @@ export default function BriefActivities({activities}: { activities: BriefActivit
       <ItemContent className="max-h-96 overflow-auto">
         <div className="flow-root">
           <ul role="list" className="-mb-8">
-            {activities.map((activity) => (
+            {activities.map((activity, index) => (
               <li key={activity.id}>
                 <div className="relative pb-8">
-                  <span aria-hidden="true" className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"/>
+
+                  {index !== activities.length - 1 ? (<span aria-hidden="true" className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"/>): null}
+
 
                   <div className="relative flex space-x-3">
                     <div>
