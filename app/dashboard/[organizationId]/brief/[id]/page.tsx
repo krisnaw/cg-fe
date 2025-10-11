@@ -5,7 +5,7 @@ import Link from "next/link";
 import BriefActivities from "@/app/dashboard/[organizationId]/brief/[id]/brief-activities";
 import {BriefInformationCard} from "@/components/brief-detail/brief-information-card";
 import {BriefAssignedCard} from "@/components/brief-detail/brief-assigned-card";
-import {BriefDiscussionCard} from "@/components/brief-detail/brief-discussion-card";
+import {BriefDiscussionCard} from "@/components/brief-discussion/brief-discussion-card";
 import {Pencil} from "lucide-react";
 import {Item, ItemActions, ItemContent, ItemHeader, ItemTitle,} from "@/components/ui/item"
 import {getActivitiesByBriefId} from "@/db/query/brief-activities.query";
@@ -21,8 +21,6 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
   if (!brief) {
     redirect(`/dashboard/${organizationId}/brief`);
   }
-
-  console.log(activities);
 
   return (
     <div>
