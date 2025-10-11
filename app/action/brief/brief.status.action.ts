@@ -56,6 +56,7 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
       }
 
       if (status === BRIEF_STATUS.RESUBMITTED) {
+         await storeResubmittedActivity(updated)
          await sendResubmittedNotification(updated)
       }
 
@@ -131,5 +132,17 @@ async function sendResubmittedNotification(brief: z.infer<typeof briefSelectSche
       })
    } catch (error) {
       console.error("Failed to send Knock notification for resubmitted draft", error)
+   }
+}
+
+async function storeResubmittedActivity(brief: z.infer<typeof briefSelectSchema>) {
+   try {
+      await db.insert(briefActivities).values({
+         briefId: brief.id,
+         actor: brief.writer,
+         message: BRIEF_ACTIVITY_MESSAGES.brief_resubmitted,
+      })
+   } catch (error) {
+      console.error("Failed to store brief activity for draft resubmission", error)
    }
 }
