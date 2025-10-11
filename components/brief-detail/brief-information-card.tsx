@@ -9,11 +9,7 @@ import type {BriefWithUsers} from "@/db/types/brief.types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import {CalendarDays, Pilcrow, RefreshCcw} from "lucide-react";
 
-export type BriefInformationCardProps = {
-  brief: BriefWithUsers
-}
-
-export function BriefInformationCard({brief}: BriefInformationCardProps) {
+export function BriefInformationCard({brief}: { brief: BriefWithUsers }) {
   return (
     <Item variant="muted" className="shadow rounded-xl">
       <ItemHeader>

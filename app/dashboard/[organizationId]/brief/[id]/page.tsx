@@ -52,7 +52,7 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
             </ItemContent>
 
           </Item>
-          <BriefDiscussionCard/>
+          <BriefDiscussionCard brief={brief} />
         </div>
 
         <div className="lg:col-start-3 lg:row-end-1 grid gap-8">
