@@ -13,7 +13,6 @@ import {signUpCompany} from "@/app/action/auth/sign-up-company.action";
 import {ActionResponse} from "@/lib/types";
 import {createOrganization} from "@/app/action/member/organization/organization.create.action";
 
-
 export default function SignUpCompany() {
    const searchParams = useSearchParams();
    const rawToken = searchParams.get("token");
@@ -61,9 +60,9 @@ export default function SignUpCompany() {
              <input type="hidden" name="token" defaultValue={token}/>
           <Card className="min-w-sm min-h-[520px]">
             <CardHeader>
-              <CardTitle>Company Account</CardTitle>
+              <CardTitle>Register as Company</CardTitle>
               <CardDescription>
-                Register your organization and invite your team
+                Register as a company to start managing your work.
               </CardDescription>
             </CardHeader>
                 <CardContent>

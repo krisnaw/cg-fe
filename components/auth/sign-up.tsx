@@ -50,9 +50,9 @@ export default function SignUp() {
           <input type="hidden" name="token" defaultValue={token}/>
           <Card className="min-w-sm min-h-[520px]">
             <CardHeader>
-              <CardTitle>Freelancer Account</CardTitle>
+              <CardTitle>Register as Freelancer</CardTitle>
               <CardDescription>
-                Create a personal account to start managing your work
+                Register as a freelancer to find exciting projects.
               </CardDescription>
             </CardHeader>
             <CardContent>
