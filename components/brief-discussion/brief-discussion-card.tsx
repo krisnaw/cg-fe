@@ -22,9 +22,10 @@ import type {BriefWithUsers} from "@/db/types/brief.types";
 import {deleteDiscussion, store} from "@/app/action/brief-discussion/brief-discussion.create.action";
 import {Spinner} from "@/components/ui/spinner";
 import {Button} from "@/components/ui/button";
-import {TrashIcon} from "lucide-react";
+import {MessageCircleIcon, TrashIcon} from "lucide-react";
 import {BriefDiscussionWithUser} from "@/db/types/brief-discussion.types";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Empty, EmptyHeader, EmptyMedia, EmptyTitle} from "@/components/ui/empty";
 
 export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWithUsers, discussions: BriefDiscussionWithUser[], user: SessionUserType }) {
   const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_: ActionResponse, formData: FormData) => {
@@ -49,40 +50,50 @@ export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWi
 
       <ItemContent>
 
-        <ItemGroup>
-          {discussions.map((message) => (
-            <Item key={message.id}>
-              {message.user?.image ? (
-                <ItemMedia>
-                  <Avatar>
-                    <AvatarImage src={message.user.image} alt={message.user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </ItemMedia>
-              ) : null}
+        {discussions.length === 0 ? (
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <MessageCircleIcon/>
+              </EmptyMedia>
+              <EmptyTitle>No discussion found</EmptyTitle>
+            </EmptyHeader>
+          </Empty>
+        ): (
+          <ItemGroup>
+            {discussions.map((message) => (
+              <Item key={message.id}>
+                {message.user?.image ? (
+                  <ItemMedia>
+                    <Avatar>
+                      <AvatarImage src={message.user.image} alt={message.user.name} />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </ItemMedia>
+                ) : null}
 
-              <ItemContent className="gap-1">
-                <ItemTitle>{message.user?.name}</ItemTitle>
-                <ItemDescription>
-                  {message.message}
-                </ItemDescription>
-              </ItemContent>
-              <ItemActions className="flex">
-                <ItemDescription>{message.createdAt.toLocaleDateString()}</ItemDescription>
-                {user.id == message.userId ?
-                  (
-                    <Button
-                      onClick={() => deleteDiscussion(message.id)}
-                      variant="ghost" size="icon-sm" className="rounded-full text-destructive">
-                      <TrashIcon />
-                    </Button>
-                  ) : null}
-              </ItemActions>
-            </Item>
-          ))}
-        </ItemGroup>
-
-
+                <ItemContent className="gap-1">
+                  <ItemTitle>{message.user?.name}</ItemTitle>
+                  <ItemDescription>
+                    {message.message}
+                  </ItemDescription>
+                </ItemContent>
+                <ItemActions className="flex">
+                  <ItemDescription>{message.createdAt.toLocaleDateString()}</ItemDescription>
+                  {user.id == message.userId ?
+                    (
+                      <Button
+                        onClick={() => deleteDiscussion(message.id)}
+                        variant="ghost" size="icon-sm" className="rounded-full text-destructive">
+                        <TrashIcon />
+                      </Button>
+                    ) : null}
+                </ItemActions>
+              </Item>
+            ))}
+          </ItemGroup>
+        )}
+        
       </ItemContent>
 
       <ItemSeparator/>
