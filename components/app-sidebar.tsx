@@ -122,11 +122,6 @@ const data = {
          url: "/dashboard/freelancer/payment",
          icon: PieChart,
       },
-      {
-         name: "Travel",
-         url: "#",
-         icon: Map,
-      },
    ],
 }
 

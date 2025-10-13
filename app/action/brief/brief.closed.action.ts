@@ -11,6 +11,7 @@ import {invoice} from "@/db/schema/invoice.schema";
 import {getDraftInvoiceByOrgIdAndWriterId} from "@/db/query/invoice.query";
 import {briefActivities} from "@/db/schema/brief-activities.schema";
 import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
+import {realtime} from "@/lib/realtime";
 
 const closeBriefSchema = z.object({
    briefId: z.number(),
@@ -47,6 +48,7 @@ export async function closeBrief(input: z.infer<typeof closeBriefSchema>): Promi
       }
 
       await storeBriefClosedActivity(updated)
+      await realtime.notification.alert.emit("Hello world")
       revalidatePath("/", "layout")
 
       // TODO: CREATE/UPDATE invoice
