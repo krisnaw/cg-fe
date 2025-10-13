@@ -99,6 +99,12 @@ dependencies:
   '@uploadthing/react':
     specifier: ^7.3.3
     version: 7.3.3(next@15.5.4)(react@19.1.1)(uploadthing@7.7.4)
+  '@upstash/realtime':
+    specifier: ^0.2.4
+    version: 0.2.4(react-dom@19.1.1)(react@19.1.1)(zod@4.1.11)
+  '@upstash/redis':
+    specifier: ^1.35.5
+    version: 1.35.5
   better-auth:
     specifier: ^1.3.16
     version: 1.3.26(next@15.5.4)(react-dom@19.1.1)(react@19.1.1)
@@ -119,7 +125,7 @@ dependencies:
     version: 17.2.3
   drizzle-orm:
     specifier: ^0.44.5
-    version: 0.44.6(@types/pg@8.15.5)(pg@8.16.3)
+    version: 0.44.6(@types/pg@8.15.5)(@upstash/redis@1.35.5)(pg@8.16.3)
   drizzle-zod:
     specifier: ^0.8.3
     version: 0.8.3(drizzle-orm@0.44.6)(zod@4.1.11)
@@ -4289,6 +4295,24 @@ packages:
       sqids: 0.3.0
     dev: false
 
+  /@upstash/realtime@0.2.4(react-dom@19.1.1)(react@19.1.1)(zod@4.1.11):
+    resolution: {integrity: sha512-CWPzkRlmb1Yq2bZDsTR2FKVL0+n2famkTQRC2KmpAQgTZa9u+ftwTd9t28ExIe/WVDjD+Gkrwws3NK6pjDrShw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      zod: ^3.25.0 || ^4.0.0
+    dependencies:
+      react: 19.1.1
+      react-dom: 19.1.1(react@19.1.1)
+      zod: 4.1.11
+    dev: false
+
+  /@upstash/redis@1.35.5:
+    resolution: {integrity: sha512-KdLdNAspQGOTGeC++o2LDBzNbMXrfInnmW5nUJfNXabnVh8X4NPrlJ0X4j75cBUShiMpXB3uI1ql4KpFQeqrHQ==}
+    dependencies:
+      uncrypto: 0.1.3
+    dev: false
+
   /abs-svg-path@0.1.1:
     resolution: {integrity: sha512-d8XPSGjfyzlXC3Xx891DJRyZfqk5JU0BJrDQcsWomFIV1/BIzPW5HDH5iDdWpqWaav0YVIEzT1RHTwWr0FFshA==}
     dev: false
@@ -4642,7 +4666,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.44.6(@types/pg@8.15.5)(pg@8.16.3):
+  /drizzle-orm@0.44.6(@types/pg@8.15.5)(@upstash/redis@1.35.5)(pg@8.16.3):
     resolution: {integrity: sha512-uy6uarrrEOc9K1u5/uhBFJbdF5VJ5xQ/Yzbecw3eAYOunv5FDeYkR2m8iitocdHBOHbvorviKOW5GVw0U1j4LQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -4735,6 +4759,7 @@ packages:
         optional: true
     dependencies:
       '@types/pg': 8.15.5
+      '@upstash/redis': 1.35.5
       pg: 8.16.3
     dev: false
 
@@ -4744,7 +4769,7 @@ packages:
       drizzle-orm: '>=0.36.0'
       zod: ^3.25.0 || ^4.0.0
     dependencies:
-      drizzle-orm: 0.44.6(@types/pg@8.15.5)(pg@8.16.3)
+      drizzle-orm: 0.44.6(@types/pg@8.15.5)(@upstash/redis@1.35.5)(pg@8.16.3)
       zod: 4.1.11
     dev: false
 

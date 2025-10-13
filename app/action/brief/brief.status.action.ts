@@ -11,6 +11,7 @@ import {BRIEF_STATUS} from "@/lib/brief-status";
 import Knock from "@knocklabs/node";
 import {briefActivities} from "@/db/schema/brief-activities.schema";
 import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
+import {realtime} from "@/lib/realtime";
 
 const updateStatusSchema = z.object({
    briefId: z.number(),
@@ -59,7 +60,7 @@ export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema
          await storeResubmittedActivity(updated)
          await sendResubmittedNotification(updated)
       }
-
+     await realtime.notification.alert.emit("Hello world")
       revalidatePath("/", "layout")
 
       return {
