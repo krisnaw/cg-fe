@@ -34,7 +34,7 @@ export function BriefInformationCard({brief}: { brief: BriefWithUsers }) {
               <RefreshCcw size={18} className="text-muted-foreground" />
             </dt>
             <dd className="text-sm/6">
-              <BriefStatusBadge status={brief.status}/>
+              <BriefStatusBadge status={brief.status} briefId={brief.id}/>
             </dd>
           </div>
 

@@ -100,7 +100,7 @@ export function BriefItem({brief } : {brief: BriefWithUsers} ) {
 
           </div>
         </ItemMedia>
-        <BriefStatusBadge status={brief.status} />
+        <BriefStatusBadge status={brief.status} briefId={brief.id} />
       </ItemFooter>
 
     </Item>

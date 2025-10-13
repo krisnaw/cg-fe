@@ -9,10 +9,12 @@ import {RealtimeEvents} from "@/lib/realtime";
 
 type BriefStatusBadgeProps = {
   status: string
+  briefId: number
 }
 
-export function BriefStatusBadge({status}: BriefStatusBadgeProps) {
+export function BriefStatusBadge({status, briefId}: BriefStatusBadgeProps) {
   const router = useRouter()
+  void briefId
 
   useRealtime<RealtimeEvents>({
     events: {
