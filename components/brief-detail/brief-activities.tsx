@@ -6,7 +6,7 @@ import {UserIcon} from "lucide-react";
 // @ts-ignore
 import {ago} from "time-ago";
 
-export default function BriefActivities({activities}: { activities: BriefActivityWithUser[] }) {
+export function BriefActivities({activities}: { activities: BriefActivityWithUser[] }) {
   return (
     <Item variant="outline" className="shadow rounded-xl">
       <ItemHeader>

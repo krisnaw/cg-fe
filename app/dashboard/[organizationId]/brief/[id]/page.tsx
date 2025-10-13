@@ -2,7 +2,7 @@ import {redirect} from "next/navigation";
 import {getBriefById} from "@/db/query/brief.query";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import BriefActivities from "@/app/dashboard/[organizationId]/brief/[id]/brief-activities";
+import {BriefActivities} from "@/components/brief-detail/brief-activities";
 import {BriefInformationCard} from "@/components/brief-detail/brief-information-card";
 import {BriefAssignedCard} from "@/components/brief-detail/brief-assigned-card";
 import {BriefDiscussionCard} from "@/components/brief-discussion/brief-discussion-card";
