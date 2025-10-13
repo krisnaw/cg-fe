@@ -7,6 +7,11 @@ export type ActionResponse = {
    id?: string,
 }
 
+export const initialState: ActionResponse = {
+  success: false,
+  message: "",
+}
+
 export const currencyOptions = [
    {value: 'USD', label: 'US$'},
    {value: 'SGD', label: 'S$'},

@@ -34,7 +34,7 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
       <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2 grid gap-8">
           <BriefSummary organizationId={organizationId} brief={brief} />
-          {session?.user ? <BriefDiscussionCard brief={brief}  user={session?.user} /> : null}
+          {session?.user ? <BriefDiscussionCard brief={brief} discussions={discussions} user={session?.user} /> : null}
         </div>
 
         <div className="lg:col-start-3 lg:row-end-1 grid gap-8">

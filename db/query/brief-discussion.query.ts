@@ -1,12 +1,15 @@
 "use server"
 import {db} from "@/db/db-connection";
-import {desc, eq} from "drizzle-orm";
+import {asc, eq} from "drizzle-orm";
 import {briefDiscussion} from "@/db/schema/brief-discussion.schema";
 
 export async function getDiscussionByBriefId(briefId: number) {
   const discussions = await db.query.briefDiscussion.findMany({
+    with: {
+      user: true,
+    },
     where: eq(briefDiscussion.briefId, briefId),
-    orderBy: [desc(briefDiscussion.createdAt)],
+    orderBy: [asc(briefDiscussion.createdAt)],
   })
 
   return discussions ?? null;

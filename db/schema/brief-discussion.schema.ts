@@ -2,6 +2,7 @@ import {integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {briefs} from "@/db/schema/brief.schema";
 import {user} from "@/db/schema/auth-schema";
 import {createInsertSchema} from "drizzle-zod";
+import {relations} from "drizzle-orm";
 
 export const briefDiscussion = pgTable('brief_discussion', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -26,3 +27,10 @@ export const briefDiscussionInsertSchema = createInsertSchema(briefDiscussion).o
   createdAt: true,
   updatedAt: true,
 })
+
+export const briefDiscussionRelations = relations(briefDiscussion, ({one}) => ({
+  user: one(user, {
+    fields: [briefDiscussion.userId],
+    references: [user.id],
+  }),
+}));

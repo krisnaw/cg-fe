@@ -1,6 +1,6 @@
 "use client"
 
-import {useActionState, useRef, useState} from "react";
+import {useActionState, useRef} from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import {toast} from "sonner";
 
@@ -17,22 +17,16 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import {InputGroup, InputGroupAddon, InputGroupButton,} from "@/components/ui/input-group"
-import {ActionResponse, SessionUserType} from "@/lib/types";
+import {ActionResponse, initialState, SessionUserType} from "@/lib/types";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 import {store} from "@/app/action/brief-discussion/brief-discussion.create.action";
 import {Spinner} from "@/components/ui/spinner";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {TrashIcon} from "lucide-react";
+import {BriefDiscussionWithUser} from "@/db/types/brief-discussion.types";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
-const initialState: ActionResponse = {
-  success: false,
-  message: "",
-}
-
-
-
-export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user: SessionUserType }) {
+export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWithUsers, discussions: BriefDiscussionWithUser[], user: SessionUserType }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_: ActionResponse, formData: FormData) => {
     const payload = {
@@ -52,26 +46,6 @@ export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user
     return result;
   }, initialState)
 
-
-  const [messages, setMessages] = useState([
-    {
-      role: "agent",
-      content: "Hi, how can I help you today?",
-    },
-    {
-      role: "user",
-      content: "Hey, I'm having trouble with my account.",
-    },
-    {
-      role: "agent",
-      content: "What seems to be the problem?",
-    },
-    {
-      role: "user",
-      content: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
-    },
-  ])
-
   return (
     <Item variant="outline" className="shadow rounded-xl">
 
@@ -82,22 +56,26 @@ export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user
       <ItemContent>
 
         <ItemGroup>
-          {messages.map((message, index) => (
-            <Item key={index}>
-              <ItemMedia>
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </ItemMedia>
+          {discussions.map((message) => (
+            <Item key={message.id}>
+              {message.user?.image ? (
+                <ItemMedia>
+                  <Avatar>
+                    <AvatarImage src={message.user.image} alt={message.user.name} />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </ItemMedia>
+              ) : null}
+
               <ItemContent className="gap-1">
-                <ItemTitle>Username</ItemTitle>
+                <ItemTitle>{message.user?.name}</ItemTitle>
                 <ItemDescription>
-                  {message.content}
+                  {message.message}
                 </ItemDescription>
               </ItemContent>
-              <ItemActions>
-                <Button variant="ghost" size="icon" className="rounded-full">
+              <ItemActions className="flex">
+                <ItemDescription>{message.createdAt.toLocaleDateString()}</ItemDescription>
+                <Button variant="ghost" size="icon-sm" className="rounded-full text-destructive">
                   <TrashIcon />
                 </Button>
               </ItemActions>
@@ -120,11 +98,11 @@ export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user
               data-slot="input-group-control"
               className="flex field-sizing-content min-h-8 w-full resize-none rounded-md bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm"
               placeholder="Write a message..."
-              minRows={1}
+              minRows={3}
               required
               disabled={isPending}
             />
-            <InputGroupAddon align="block-end">
+            <InputGroupAddon align="block-end" className="border-t border-gray-200">
               <InputGroupButton type="submit" className="ml-auto" size="sm" variant="default" disabled={isPending}>
                 Send
                 {isPending && <Spinner className="ml-2 size-3.5"/>}
