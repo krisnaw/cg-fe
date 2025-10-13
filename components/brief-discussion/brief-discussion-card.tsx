@@ -8,7 +8,7 @@ import {toast} from "sonner";
 import {Item, ItemContent, ItemFooter, ItemHeader, ItemMedia, ItemSeparator, ItemTitle,} from "@/components/ui/item"
 import {InputGroup, InputGroupAddon, InputGroupButton,} from "@/components/ui/input-group"
 import {Empty, EmptyHeader, EmptyMedia, EmptyTitle,} from "@/components/ui/empty"
-import {ActionResponse} from "@/lib/types";
+import {ActionResponse, SessionUserType} from "@/lib/types";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 import {store} from "@/app/action/brief-discussion/brief-discussion.create.action";
 import {Spinner} from "@/components/ui/spinner";
@@ -18,14 +18,15 @@ const initialState: ActionResponse = {
   message: "",
 }
 
-export function BriefDiscussionCard({brief}: { brief: BriefWithUsers }) {
+export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user: SessionUserType }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_: ActionResponse, formData: FormData) => {
     const payload = {
       message: formData.get("message") as string,
-      briefId: formData.get("briefId") as string,
+      briefId: Number(formData.get("briefId")),
+      userId: formData.get("userId") as string,
     }
-    const result = await store(formData);
+    const result = await store(payload);
 
     if (!result.success) {
       toast.error(result.message);
@@ -60,6 +61,7 @@ export function BriefDiscussionCard({brief}: { brief: BriefWithUsers }) {
       <ItemFooter>
         <form ref={formRef} action={formAction} className="w-full">
           <input type="hidden" name="briefId" value={brief.id}/>
+          <input type="hidden" name="userId" value={user.id}/>
           <InputGroup>
             <TextareaAutosize
               name="message"

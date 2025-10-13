@@ -1,6 +1,7 @@
 import {integer, pgTable, text, timestamp} from "drizzle-orm/pg-core";
 import {briefs} from "@/db/schema/brief.schema";
 import {user} from "@/db/schema/auth-schema";
+import {createInsertSchema} from "drizzle-zod";
 
 export const briefDiscussion = pgTable('brief_discussion', {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -20,3 +21,8 @@ export const briefDiscussion = pgTable('brief_discussion', {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
+
+export const briefDiscussionInsertSchema = createInsertSchema(briefDiscussion).omit({
+  createdAt: true,
+  updatedAt: true,
+})

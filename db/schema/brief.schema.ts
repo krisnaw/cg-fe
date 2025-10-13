@@ -46,7 +46,6 @@ export const briefs = pgTable('briefs', {
    ),
 }));
 
-
 export type BriefModel = typeof briefs.$inferSelect;
 
 export const briefSelectSchema = createSelectSchema(briefs);
