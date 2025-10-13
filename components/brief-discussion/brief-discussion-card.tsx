@@ -21,6 +21,10 @@ const initialState: ActionResponse = {
 export function BriefDiscussionCard({brief}: { brief: BriefWithUsers }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_: ActionResponse, formData: FormData) => {
+    const payload = {
+      message: formData.get("message") as string,
+      briefId: formData.get("briefId") as string,
+    }
     const result = await store(formData);
 
     if (!result.success) {
@@ -54,7 +58,7 @@ export function BriefDiscussionCard({brief}: { brief: BriefWithUsers }) {
       <ItemSeparator/>
 
       <ItemFooter>
-        <form ref={formRef} action={formAction}>
+        <form ref={formRef} action={formAction} className="w-full">
           <input type="hidden" name="briefId" value={brief.id}/>
           <InputGroup>
             <TextareaAutosize
@@ -67,7 +71,7 @@ export function BriefDiscussionCard({brief}: { brief: BriefWithUsers }) {
               disabled={isPending}
             />
             <InputGroupAddon align="block-end">
-              <InputGroupButton className="ml-auto" size="sm" variant="default" disabled={isPending}>
+              <InputGroupButton type="submit" className="ml-auto" size="sm" variant="default" disabled={isPending}>
                 Send
                 {isPending && <Spinner className="ml-2 size-3.5"/>}
               </InputGroupButton>

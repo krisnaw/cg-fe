@@ -2,8 +2,6 @@
 
 import {z} from "zod";
 import {ActionResponse} from "@/lib/types";
-import {briefDiscussion} from "@/db/schema/brief-discussion.schema";
-import {db} from "@/db/db-connection";
 
 const briefDiscussionSchema = z.object({
   briefId: z.coerce.number().int().positive(),
@@ -12,24 +10,24 @@ const briefDiscussionSchema = z.object({
 });
 
 export async function store(formData: FormData): Promise<ActionResponse> {
-  const parsed = briefDiscussionSchema.safeParse({
-    briefId: formData.get("briefId"),
-    message: formData.get("message"),
-  });
-
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: "Invalid data",
-      error: z.treeifyError(parsed.error)
-    }
-  }
-
-  await db.insert(briefDiscussion).values({
-    briefId: parsed.data.briefId,
-    userId: "1",
-    message: parsed.data.message,
-  })
+  // const parsed = briefDiscussionSchema.safeParse({
+  //   briefId: formData.get("briefId"),
+  //   message: formData.get("message"),
+  // });
+  //
+  // if (!parsed.success) {
+  //   return {
+  //     success: false,
+  //     message: "Invalid data",
+  //     error: z.treeifyError(parsed.error)
+  //   }
+  // }
+  //
+  // await db.insert(briefDiscussion).values({
+  //   briefId: parsed.data.briefId,
+  //   userId: "1",
+  //   message: parsed.data.message,
+  // })
 
   return {
     success: true,
