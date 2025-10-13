@@ -5,6 +5,7 @@ import {ActionResponse} from "@/lib/types";
 import {briefDiscussion, briefDiscussionInsertSchema} from "@/db/schema/brief-discussion.schema";
 import {db} from "@/db/db-connection";
 import {revalidatePath} from "next/cache";
+import {eq} from "drizzle-orm";
 
 const briefDiscussionSchema = z.object({
   briefId: z.number(),
@@ -33,4 +34,9 @@ export async function store(formData: payloadData): Promise<ActionResponse> {
     message: "Message sent successfully"
   }
 
+}
+
+export async function deleteDiscussion(discussionId: number): Promise<void> {
+  await db.delete(briefDiscussion).where(eq(briefDiscussion.id, discussionId))
+  revalidatePath("/", "layout")
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import {useActionState, useRef} from "react";
+import {useActionState} from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import {toast} from "sonner";
 
@@ -19,7 +19,7 @@ import {
 import {InputGroup, InputGroupAddon, InputGroupButton,} from "@/components/ui/input-group"
 import {ActionResponse, initialState, SessionUserType} from "@/lib/types";
 import type {BriefWithUsers} from "@/db/types/brief.types";
-import {store} from "@/app/action/brief-discussion/brief-discussion.create.action";
+import {deleteDiscussion, store} from "@/app/action/brief-discussion/brief-discussion.create.action";
 import {Spinner} from "@/components/ui/spinner";
 import {Button} from "@/components/ui/button";
 import {TrashIcon} from "lucide-react";
@@ -27,7 +27,6 @@ import {BriefDiscussionWithUser} from "@/db/types/brief-discussion.types";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWithUsers, discussions: BriefDiscussionWithUser[], user: SessionUserType }) {
-  const formRef = useRef<HTMLFormElement>(null);
   const [, formAction, isPending] = useActionState<ActionResponse, FormData>(async (_: ActionResponse, formData: FormData) => {
     const payload = {
       message: formData.get("message") as string,
@@ -35,20 +34,15 @@ export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWi
       userId: formData.get("userId") as string,
     }
     const result = await store(payload);
-
     if (!result.success) {
       toast.error(result.message);
-      return result;
     }
-
     toast.success(result.message);
-    formRef.current?.reset();
     return result;
   }, initialState)
 
   return (
     <Item variant="outline" className="shadow rounded-xl">
-
       <ItemHeader>
         <ItemTitle>Discussion</ItemTitle>
       </ItemHeader>
@@ -75,9 +69,14 @@ export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWi
               </ItemContent>
               <ItemActions className="flex">
                 <ItemDescription>{message.createdAt.toLocaleDateString()}</ItemDescription>
-                <Button variant="ghost" size="icon-sm" className="rounded-full text-destructive">
-                  <TrashIcon />
-                </Button>
+                {user.id == message.userId ?
+                  (
+                    <Button
+                      onClick={() => deleteDiscussion(message.id)}
+                      variant="ghost" size="icon-sm" className="rounded-full text-destructive">
+                      <TrashIcon />
+                    </Button>
+                  ) : null}
               </ItemActions>
             </Item>
           ))}
@@ -89,7 +88,7 @@ export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWi
       <ItemSeparator/>
 
       <ItemFooter>
-        <form ref={formRef} action={formAction} className="w-full">
+        <form action={formAction} className="w-full">
           <input type="hidden" name="briefId" value={brief.id}/>
           <input type="hidden" name="userId" value={user.id}/>
           <InputGroup>
@@ -111,7 +110,6 @@ export function BriefDiscussionCard({brief, discussions, user}: { brief: BriefWi
           </InputGroup>
         </form>
       </ItemFooter>
-
     </Item>
   )
 }
