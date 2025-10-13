@@ -1,22 +1,36 @@
 "use client"
 
-import {useActionState, useRef} from "react";
-import {MessageCircleIcon} from "lucide-react";
+import {useActionState, useRef, useState} from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import {toast} from "sonner";
 
-import {Item, ItemContent, ItemFooter, ItemHeader, ItemMedia, ItemSeparator, ItemTitle,} from "@/components/ui/item"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
+  ItemGroup,
+  ItemHeader,
+  ItemMedia,
+  ItemSeparator,
+  ItemTitle,
+} from "@/components/ui/item"
 import {InputGroup, InputGroupAddon, InputGroupButton,} from "@/components/ui/input-group"
-import {Empty, EmptyHeader, EmptyMedia, EmptyTitle,} from "@/components/ui/empty"
 import {ActionResponse, SessionUserType} from "@/lib/types";
 import type {BriefWithUsers} from "@/db/types/brief.types";
 import {store} from "@/app/action/brief-discussion/brief-discussion.create.action";
 import {Spinner} from "@/components/ui/spinner";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
+import {TrashIcon} from "lucide-react";
 
 const initialState: ActionResponse = {
   success: false,
   message: "",
 }
+
+
 
 export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user: SessionUserType }) {
   const formRef = useRef<HTMLFormElement>(null);
@@ -38,21 +52,59 @@ export function BriefDiscussionCard({brief, user}: { brief: BriefWithUsers, user
     return result;
   }, initialState)
 
+
+  const [messages, setMessages] = useState([
+    {
+      role: "agent",
+      content: "Hi, how can I help you today?",
+    },
+    {
+      role: "user",
+      content: "Hey, I'm having trouble with my account.",
+    },
+    {
+      role: "agent",
+      content: "What seems to be the problem?",
+    },
+    {
+      role: "user",
+      content: "Ducimus quas delectus ad maxime totam doloribus reiciendis ex. Tempore dolorem maiores. Similique voluptatibus tempore non ut.",
+    },
+  ])
+
   return (
     <Item variant="outline" className="shadow rounded-xl">
+
       <ItemHeader>
         <ItemTitle>Discussion</ItemTitle>
       </ItemHeader>
-      <ItemMedia/>
+
       <ItemContent>
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <MessageCircleIcon/>
-            </EmptyMedia>
-            <EmptyTitle>No discussion found</EmptyTitle>
-          </EmptyHeader>
-        </Empty>
+
+        <ItemGroup>
+          {messages.map((message, index) => (
+            <Item key={index}>
+              <ItemMedia>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </ItemMedia>
+              <ItemContent className="gap-1">
+                <ItemTitle>Username</ItemTitle>
+                <ItemDescription>
+                  {message.content}
+                </ItemDescription>
+              </ItemContent>
+              <ItemActions>
+                <Button variant="ghost" size="icon" className="rounded-full">
+                  <TrashIcon />
+                </Button>
+              </ItemActions>
+            </Item>
+          ))}
+        </ItemGroup>
+
 
       </ItemContent>
 
