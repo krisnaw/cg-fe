@@ -7,6 +7,7 @@ import {toast} from "sonner"
 import {Button} from "@/components/ui/button"
 import {updateBriefStatus} from "@/app/action/brief/brief.status.action"
 import {BRIEF_STATUS} from "@/lib/brief-status";
+import {Spinner} from "@/components/ui/spinner";
 
 type ButtonRequestRevisionProps = {
    briefId: number
@@ -32,7 +33,7 @@ export function ButtonRequestRevision({briefId}: ButtonRequestRevisionProps) {
 
    return (
        <Button type="button" variant="outline" onClick={handleClick} disabled={isPending}>
-          Request Revision
+          Request Revision {isPending ? <Spinner /> : null}
        </Button>
    )
 }

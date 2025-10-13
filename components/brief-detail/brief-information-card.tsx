@@ -8,25 +8,8 @@ import {SubmitDraft} from "@/components/brief-action/submit-draft"
 import type {BriefWithUsers} from "@/db/types/brief.types"
 import {BRIEF_STATUS} from "@/lib/brief-status";
 import {CalendarDays, Pilcrow, RefreshCcw} from "lucide-react";
-import {useRealtime} from "@upstash/realtime/client";
-import {RealtimeEvents} from "@/lib/realtime";
-import {useRouter} from "next/navigation";
 
 export function BriefInformationCard({brief}: { brief: BriefWithUsers }) {
-  const router = useRouter()
-
-  useRealtime<RealtimeEvents>({
-    events: {
-      notification: {
-        alert: (data) => {
-          console.log(data)
-          router.refresh()
-        },
-      },
-    },
-  })
-
-
   return (
     <Item variant="muted" className="shadow rounded-xl">
       <ItemHeader>

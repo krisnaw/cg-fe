@@ -14,136 +14,136 @@ import {BRIEF_ACTIVITY_MESSAGES} from "@/lib/brief-activity-messages";
 import {realtime} from "@/lib/realtime";
 
 const updateStatusSchema = z.object({
-   briefId: z.number(),
-   status: z.string()
+  briefId: z.number(),
+  status: z.string()
 })
 
-const knock = new Knock({ apiKey: process.env.KNOCK_SECRET_API_KEY });
+const knock = new Knock({apiKey: process.env.KNOCK_SECRET_API_KEY});
 const BRIEF_WORKFLOW = "brief-was-created"
 
 export async function updateBriefStatus(input: z.infer<typeof updateStatusSchema>): Promise<ActionResponse> {
-   const parsed = updateStatusSchema.safeParse(input)
+  const parsed = updateStatusSchema.safeParse(input)
 
-   if (!parsed.success) {
+  if (!parsed.success) {
+    return {
+      success: false,
+      message: "Invalid status update",
+      error: z.treeifyError(parsed.error),
+    }
+  }
+
+  const {briefId, status} = parsed.data
+
+  try {
+    const [updated] = await db
+      .update(briefs)
+      .set({
+        status,
+        updatedAt: new Date(),
+      })
+      .where(eq(briefs.id, briefId))
+      .returning()
+
+    if (!updated) {
       return {
-         success: false,
-         message: "Invalid status update",
-         error: z.treeifyError(parsed.error),
+        success: false,
+        message: "Brief not found",
       }
-   }
+    }
 
-   const {briefId, status} = parsed.data
+    if (status === BRIEF_STATUS.REQUEST_REVISION) {
+      await storeRevisionRequestedActivity(updated)
+      await sendRequestRevisionNotification(updated)
+    }
 
-   try {
-      const [updated] = await db
-          .update(briefs)
-          .set({
-             status,
-             updatedAt: new Date(),
-          })
-          .where(eq(briefs.id, briefId))
-          .returning()
+    if (status === BRIEF_STATUS.RESUBMITTED) {
+      await storeResubmittedActivity(updated)
+      await sendResubmittedNotification(updated)
+    }
+    await realtime.notification.alert.emit("Hello world")
+    revalidatePath("/", "layout")
 
-      if (!updated) {
-         return {
-            success: false,
-            message: "Brief not found",
-         }
-      }
-
-      if (status === BRIEF_STATUS.REQUEST_REVISION) {
-         await storeRevisionRequestedActivity(updated)
-         await sendRequestRevisionNotification(updated)
-      }
-
-      if (status === BRIEF_STATUS.RESUBMITTED) {
-         await storeResubmittedActivity(updated)
-         await sendResubmittedNotification(updated)
-      }
-     await realtime.notification.alert.emit("Hello world")
-      revalidatePath("/", "layout")
-
-      return {
-         success: true,
-         message: "Brief status updated",
-      }
-   } catch (error) {
-      console.error("Failed to update brief status", error)
-      return {
-         success: false,
-         message: "Failed to update status",
-      }
-   }
+    return {
+      success: true,
+      message: "Brief status updated",
+    }
+  } catch (error) {
+    console.error("Failed to update brief status", error)
+    return {
+      success: false,
+      message: "Failed to update status",
+    }
+  }
 }
 
 async function storeRevisionRequestedActivity(brief: z.infer<typeof briefSelectSchema>) {
-   try {
-      await db.insert(briefActivities).values({
-         briefId: brief.id,
-         actor: brief.manager,
-         message: BRIEF_ACTIVITY_MESSAGES.brief_revision_requested,
-      })
-   } catch (error) {
-      console.error("Failed to store brief activity for revision request", error)
-   }
+  try {
+    await db.insert(briefActivities).values({
+      briefId: brief.id,
+      actor: brief.manager,
+      message: BRIEF_ACTIVITY_MESSAGES.brief_revision_requested,
+    })
+  } catch (error) {
+    console.error("Failed to store brief activity for revision request", error)
+  }
 }
 
 async function sendRequestRevisionNotification(brief: z.infer<typeof briefSelectSchema>) {
-   try {
-      if (!brief.writer) {
-         return
-      }
+  try {
+    if (!brief.writer) {
+      return
+    }
 
-      const payload = {
-         title: brief.name,
-         subject: "Revision requested on your draft",
-         deadline: brief.dueDate?.toDateString?.() ?? "",
-         price: `${brief.currency} ${brief.price}`,
-         url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
-      }
+    const payload = {
+      title: brief.name,
+      subject: "Revision requested on your draft",
+      deadline: brief.dueDate?.toDateString?.() ?? "",
+      price: `${brief.currency} ${brief.price}`,
+      url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
+    }
 
-      await knock.workflows.trigger(BRIEF_WORKFLOW, {
-         data: payload,
-         actor: brief.manager ?? undefined,
-         recipients: [brief.writer],
-      })
-   } catch (error) {
-      console.error("Failed to send Knock notification for revision request", error)
-   }
+    await knock.workflows.trigger(BRIEF_WORKFLOW, {
+      data: payload,
+      actor: brief.manager ?? undefined,
+      recipients: [brief.writer],
+    })
+  } catch (error) {
+    console.error("Failed to send Knock notification for revision request", error)
+  }
 }
 
 async function sendResubmittedNotification(brief: z.infer<typeof briefSelectSchema>) {
-   try {
-      if (!brief.manager) {
-         return
-      }
+  try {
+    if (!brief.manager) {
+      return
+    }
 
-      const payload = {
-         title: brief.name,
-         subject: "Updated draft resubmitted for review",
-         deadline: brief.dueDate?.toDateString?.() ?? "",
-         price: `${brief.currency} ${brief.price}`,
-         url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
-      }
+    const payload = {
+      title: brief.name,
+      subject: "Updated draft resubmitted for review",
+      deadline: brief.dueDate?.toDateString?.() ?? "",
+      price: `${brief.currency} ${brief.price}`,
+      url: `${process.env.APP_URL}/dashboard/${brief.organizationId}/brief/${brief.id}`,
+    }
 
-      await knock.workflows.trigger(BRIEF_WORKFLOW, {
-         data: payload,
-         actor: brief.writer ?? undefined,
-         recipients: [brief.manager],
-      })
-   } catch (error) {
-      console.error("Failed to send Knock notification for resubmitted draft", error)
-   }
+    await knock.workflows.trigger(BRIEF_WORKFLOW, {
+      data: payload,
+      actor: brief.writer ?? undefined,
+      recipients: [brief.manager],
+    })
+  } catch (error) {
+    console.error("Failed to send Knock notification for resubmitted draft", error)
+  }
 }
 
 async function storeResubmittedActivity(brief: z.infer<typeof briefSelectSchema>) {
-   try {
-      await db.insert(briefActivities).values({
-         briefId: brief.id,
-         actor: brief.writer,
-         message: BRIEF_ACTIVITY_MESSAGES.brief_resubmitted,
-      })
-   } catch (error) {
-      console.error("Failed to store brief activity for draft resubmission", error)
-   }
+  try {
+    await db.insert(briefActivities).values({
+      briefId: brief.id,
+      actor: brief.writer,
+      message: BRIEF_ACTIVITY_MESSAGES.brief_resubmitted,
+    })
+  } catch (error) {
+    console.error("Failed to store brief activity for draft resubmission", error)
+  }
 }

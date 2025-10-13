@@ -7,6 +7,7 @@ import {toast} from "sonner"
 import {Button} from "@/components/ui/button"
 import {updateBriefStatus} from "@/app/action/brief/brief.status.action"
 import {BRIEF_STATUS} from "@/lib/brief-status";
+import {Spinner} from "@/components/ui/spinner";
 
 type ButtonResubmitProps = {
    briefId: number
@@ -32,7 +33,7 @@ export function ButtonResubmit({briefId}: ButtonResubmitProps) {
 
    return (
        <Button type="button" variant="outline" disabled={isPending} onClick={handleClick}>
-          Resubmit
+          Resubmit {isPending ? <Spinner /> : null}
        </Button>
    )
 }
