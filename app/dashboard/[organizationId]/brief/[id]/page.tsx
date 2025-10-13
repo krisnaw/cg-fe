@@ -8,6 +8,7 @@ import {getActivitiesByBriefId} from "@/db/query/brief-activities.query";
 import {BriefSummary} from "@/components/brief-detail/brief-summary";
 import {auth} from "@/lib/auth";
 import {headers} from "next/headers";
+import {getDiscussionByBriefId} from "@/db/query/brief-discussion.query";
 
 export default async function BriefDetailPage({params}: { params: Promise<{ organizationId: string, id: number }> }) {
   const session = await auth.api.getSession({
@@ -16,10 +17,13 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
 
   const {organizationId, id} = await params;
 
-  const [brief, activities] = await Promise.all([
+  const [brief, activities, discussions] = await Promise.all([
     getBriefById(id),
-    getActivitiesByBriefId(id)
+    getActivitiesByBriefId(id),
+    getDiscussionByBriefId(id)
   ]);
+
+  console.log(discussions);
 
   if (!brief) {
     redirect(`/dashboard/${organizationId}/brief`);
@@ -30,7 +34,7 @@ export default async function BriefDetailPage({params}: { params: Promise<{ orga
       <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2 grid gap-8">
           <BriefSummary organizationId={organizationId} brief={brief} />
-          {session?.user ? <BriefDiscussionCard brief={brief} user={session?.user} /> : null}
+          {session?.user ? <BriefDiscussionCard brief={brief}  user={session?.user} /> : null}
         </div>
 
         <div className="lg:col-start-3 lg:row-end-1 grid gap-8">

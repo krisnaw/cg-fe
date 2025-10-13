@@ -4,6 +4,7 @@ import {z} from "zod";
 import {ActionResponse} from "@/lib/types";
 import {briefDiscussion, briefDiscussionInsertSchema} from "@/db/schema/brief-discussion.schema";
 import {db} from "@/db/db-connection";
+import {revalidatePath} from "next/cache";
 
 const briefDiscussionSchema = z.object({
   briefId: z.number(),
@@ -25,6 +26,7 @@ export async function store(formData: payloadData): Promise<ActionResponse> {
   }
 
   await db.insert(briefDiscussion).values(parsed.data)
+  revalidatePath("/", "layout")
 
   return {
     success: true,
